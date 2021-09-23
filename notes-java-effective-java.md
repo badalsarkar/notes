@@ -69,4 +69,45 @@ class. Type is the type of object returned by the factory method, for example:
 `List<Complaint> litany = Collections.list(legacyLitany);`
 
 
+## Exceptions
+
+#### Use exceptions only for exceptional conditions
+
+#### Use checked exceptions for recoverable conditions and runtime exceptions for programming error
+
+Use checked exceptions for recoverable conditions and unchecked exceptions for
+non-recoverable conditions. When in doubt use unchecked exceptions. Don't define
+throwable that are neither checked exceptions nor runtime exceptions.  Provide
+methods for your checked exceptions to aid recovery.
+
+#### [Avoid use unnecessary use of checked exceptions](https://learning.oreilly.com/library/view/effective-java/9780134686097/ch10.xhtml#lev71)
+
+In summary, when used sparingly, checked exceptions can increase the reliability
+of programs; when overused, they make APIs painful to use. If callers won’t be
+able to recover from failures, throw unchecked exceptions. If recovery may be
+possible and you want to force callers to handle exceptional conditions, first
+consider returning an optional. Only if this would provide insufficient
+information in the case of failure should you throw a checked exception.
+
+#### [Favor use of standard exceptions](https://learning.oreilly.com/library/view/effective-java/9780134686097/ch10.xhtml#lev72)
+
+Re-using the standard exceptions provided by Java is also code re-use which is a
+good thing. Don't reuse Exception, RuntimeException, Throwable, or Error
+directly. Because you can't reliably test these exceptions as they are
+superclass of other classes.
+
+Use the following table for common re-use cases-
+
+![Reuse exceptions (Source: Effective Java)](./images/exception-reuse.png "Reuse exception (Source: Effective Java)")
+
+#### Throw exception appropriate to the abstraction
+
+Never throw lower level exception in higher level of exception unless they are
+appropriate.
+
+
+
+
+
+
 
