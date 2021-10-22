@@ -11,7 +11,7 @@
 |m+ a/ any key  | set mark with the key                                     |
 |" + a/ any key | go to the marked position defined by the key              |
 |\` + .         | jump to the position where last change occured in the current buffer|
-|''             | jump to the position where jumped from                    |
+|'' or ``             | jump to the position where jumped from                    |
 |f{character}   | jump to the character                                     |
 |; after f{character} | go to next occurrence of character                  |
 |, after f{character} | go to previous occurrence of character                  |
