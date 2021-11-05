@@ -24,6 +24,7 @@ Good if you are working locally
 ```
 git checkout -B branch name new commit sha
 ```
+
 ## Snapshots
 
 `git log -p`
@@ -37,6 +38,8 @@ git checkout -B branch name new commit sha
 recursive merge/merge commit
 
 ## Branches
+
+## Git File
 
 
 

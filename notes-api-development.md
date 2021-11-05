@@ -35,9 +35,13 @@ Source: https://learning.oreilly.com/library/view/api-design-patterns/9781617295
    allowing users of an API to build on what they’ve already learned rather than
    confusing them and forcing them to research every single name to ensure it
    means what they would assume.
+4. In short, while there are no strict rules about how to name things in a given
+   context, the important thing to remember is that all the names we choose in
+   an API are inextricably linked to the context provided by that API. As a
+   result, we should be cognizant of that context and the meaning it might
+   impart (for better or worse) when choosing names.
 
-
-## Anatomy of API design
+## Anatomy of PI esign
 
 ## Pagination pattern
 
