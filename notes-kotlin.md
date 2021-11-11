@@ -6,7 +6,7 @@ What does it mean when someone says that a programming language is safe?
 
 ## Asynchronous programming techniques
 
-[Kotlin doc](https://kotlinlang.org/docs/async-programming.html#coroutines)
+[Kotlin doc](https://kotlinlang.org/docs/async-programming.html)
 
 ## Coroutines
 
@@ -16,13 +16,13 @@ concurrently with the rest of the code. However, a coroutine is not bound to any
 particular thread. It may suspend its execution in one thread and resume in
 another thread.
 
-How does asynchronous or non-blocking programming work?
+[Read more about Coroutine in Wikipedia](https://en.wikipedia.org/wiki/Coroutine)
 
-Coroutines open the doors to concurrency and actors.
-
-Concurrency vs Asynchronous?
-
-Actor?
+> Coroutines open the doors to concurrency and actors.
+ 
+- [ ] How does asynchronous or non-blocking programming work?
+- [ ] What is the difference between Concurrency vs Asynchronous?  
+- [ ] What is Actor?
 
 **Coroutine** **Scope**: This is an interface that defines a scope for new coroutines. 
 Every coroutine builder like launch, async etc is an extension on

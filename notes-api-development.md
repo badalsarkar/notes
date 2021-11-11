@@ -41,9 +41,11 @@ Source: https://learning.oreilly.com/library/view/api-design-patterns/9781617295
    result, we should be cognizant of that context and the meaning it might
    impart (for better or worse) when choosing names.
 
-## Anatomy of PI esign
+## Anatomy of API design
 
 ## Pagination pattern
+
+## Long running operations
 
 
 
