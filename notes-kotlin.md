@@ -110,3 +110,8 @@ Collector `try-catch` block: Wrap the flow collection with a `try-catch` block.
 [Read about Lambda](https://martinfowler.com/bliki/Lambda.html)
 Lambda is also known Closures, Anonymous function, or Blocks.
 
+## Resources
+
+- Kotlin in action by Dmitry Jemerov and Svetlana Isakova [https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/](https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/)
+
+
