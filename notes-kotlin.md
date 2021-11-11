@@ -24,28 +24,30 @@ another thread.
 - [ ] What is the difference between Concurrency vs Asynchronous?  
 - [ ] What is Actor?
 
-**Coroutine** **Scope**: This is an interface that defines a scope for new coroutines. 
+**Coroutine Scope** 
+
+This is an interface that defines a scope for new coroutines. 
 Every coroutine builder like launch, async etc is an extension on
 CoroutineScope and inherits its coroutine context to automatically propagate all
 its elements and cancellation.
 
 It doesn't complete until all launched children completes.
 
-What is structured concurrency?
+- [ ] What is structured concurrency?
 
-Scope builders: `launch`, `async`, `runBlocking`, `coroutineScope`
+**Scope builders**: `launch`, `async`, `runBlocking`, `coroutineScope`
 
-`runBlocking` vs `coroutineScope`: runBlocking and coroutineScope builders may
+- `runBlocking` vs `coroutineScope`: runBlocking and coroutineScope builders may
 look similar because they both wait for their body and all its children to
 complete. The main difference is that the runBlocking method blocks the current
 thread for waiting, while coroutineScope just suspends, releasing the underlying
 thread for other usages. Because of that difference, runBlocking is a regular
 function and coroutineScope is a suspending function.
 
-The `launch` coroutine builder returns a `job` object that is a handle to the
+- The `launch` coroutine builder returns a `job` object that is a handle to the
 launched coroutine.
 
-The `async` returns a `Deferred` which is a light-weight non-blocking future
+- The `async` returns a `Deferred` which is a light-weight non-blocking future
 that represents a promise to provide a result later. We can use `.await()` on a
 deferred value to get its eventual result, but `Deferred` is also a `Job` which
 can be cancelled if needed. `await` starts the coroutine and waits for its
@@ -54,11 +56,11 @@ completion.
 We can use concurrent coroutine using the `async` keyword. Otherwise the
 coroutines are sequential in nature. 
 
-**Suspending** **Function**:
+**Suspending** **Function**
 
 [Composing suspending functions](https://kotlinlang.org/docs/composing-suspending-functions.html)
 
-### Asynchronous Flow
+## Asynchronous Flow
 
 When we want to return multiple asynchronously computed value we can use `Flow`.
 If we use a collection like `List`, we will return all the value together. But
@@ -99,14 +101,6 @@ Normally [`Flows`](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutine
 #### [Flow exceptions](https://kotlinlang.org/docs/flow.html#flow-exceptions)
 
 Collector `try-catch` block: Wrap the flow collection with a `try-catch` block.
-
-
-
-
-
-
-
-
 
 ## Inline function
 
