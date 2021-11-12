@@ -112,6 +112,6 @@ Lambda is also known Closures, Anonymous function, or Blocks.
 
 ## Resources
 
-- Kotlin in action by Dmitry Jemerov and Svetlana Isakova [https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/](https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/)
+1. Kotlin in action by Dmitry Jemerov and Svetlana Isakova [https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/](https://learning.oreilly.com/library/view/kotlin-in-action/9781617293290/)
 
 
