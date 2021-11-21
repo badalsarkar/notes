@@ -33,6 +33,15 @@ Switch to database.
 
 Lists all tables in the database.
 
+## Data Types
+
+### JSON
+
+- _jsonb_ is faster to process and also supports indexing
+
+
+
+
 
 
 
