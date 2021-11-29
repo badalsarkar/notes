@@ -25,7 +25,7 @@ allows us to deploy independently. [1](#resource)
 
 ## Resources
 
-1. Clean code
+1. [Clean code](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/chapter17.html#ch17lev1sec1)
 
 
 

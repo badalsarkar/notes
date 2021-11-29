@@ -1,5 +1,31 @@
 # Learning PostgreSQL
 
+## Architecture
+
+[https://www.postgresql.org/docs/14/tutorial-arch.html](https://www.postgresql.org/docs/14/tutorial-arch.html)
+
+- It has client/server architecture
+- If the client and server is not in the same host, the communication happens
+over TCP/IP 
+- The PostgreSQL server can handle multiple concurrent connections from clients.
+To achieve this it starts (“forks”) a new process for each connection. From that
+point on, the client and the new server process communicate without intervention
+by the original postgres process. Thus, the supervisor server process is always
+running, waiting for client connections, whereas client and associated server
+processes come and go.
+
+## Fundamentals
+
+### Operator precedence
+
+
+
+
+
+
+
+
+
 ## Logging in
 
 After installing the database software do the following-

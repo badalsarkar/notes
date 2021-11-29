@@ -90,7 +90,11 @@ a flow emits a single value (`single`).
 
 #### Flow Buffering
 
-Normally [`Flows`](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html) are sequential. It means that the code of all operators is executed in the same coroutine. The `buffer` operator creates a separate coroutine during execution for the flow it applies to.
+Normally
+[`Flows`](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html)
+are sequential. It means that the code of all operators is executed in the same
+coroutine. The `buffer` operator creates a separate coroutine during execution
+for the flow it applies to.
 
 #### Conflation
 
