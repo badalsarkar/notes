@@ -53,3 +53,16 @@ software is harder to understand than more static software.
 - Parameterized types (Generics) is also a way to reuse code.
 - Understanding run-time structure and compile-time structure of code is
 important. Design pattern helps to understand that. 
+
+- The hard part about object-oriented design is decomposing a system into
+objects.The task is difficult because many factors come into play: encapsulation,
+  granularity,dependency, flexibility, performance, evolution, re-usability, and
+  on and on. They all influence the decomposition, often in conflicting ways
+
+- When a request is sent to an object, the particular operation that is performed depends on
+both the request and the receiving object. Different objects that support identical requests
+may have different implementations of the operations that fulfill these requests. The
+run-time association of a request to an object and one of its operations is known as
+dynamic binding.
+
+## 
