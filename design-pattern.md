@@ -65,4 +65,44 @@ may have different implementations of the operations that fulfill these requests
 run-time association of a request to an object and one of its operations is known as
 dynamic binding.
 
-## 
+- Dynamic binding means that issuing a request doesn't commit you to a particular
+implementation until run-time. Consequently, you can write programs that expect an
+object with a particular interface, knowing that any object that has the correct interface
+will accept the request. Moreover, dynamic binding lets you substitute objects that
+have identical interfaces for each other at run-time. This substitutability is known as
+polymorphism, and it's a key concept in object-oriented systems. It lets a client object
+make few assumptions about other objects beyond supporting a particular interface.
+Polymorphism simplifies the definitions of clients, decouples objects from each other,
+and lets them vary their relationships to each other at run-time.
+
+
+#### Class vs Interface Inheritance 
+
+#### How to re-use code
+
+- Inheritance
+- Composition
+- Delegation
+- Parameterized types
+
+#### Common cause of redesign
+
+- Creating an object by specifying a class explicitly. Specifying a class name
+when you create an object commits you to a particular implementation instead of
+a particular interface. This commitment can complicate future changes. To avoid
+it, create objects indirectly. 
+
+- When you specify a particular operation, you commit to one way of satisfying a
+request. By avoiding hard-coded requests, you make it easier to change the way a
+request gets satisfied both at compile-time and at run-time.
+
+
+## Structural Design pattern
+
+### Adapter pattern
+
+- It wraps an existing interface or class to provide new functionality
+- There can be class adapter and object adapter
+- Class adapter uses multiple inheritance and object adapter uses object
+composition
+
