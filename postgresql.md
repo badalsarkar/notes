@@ -66,6 +66,12 @@ Lists all tables in the database.
 - _jsonb_ is faster to process and also supports indexing
 
 
+## Performance
+
+### EXPLAIN
+
+PostgreSQL devises a query plan for each query it receives. Choosing the right plan to match the query structure and the properties of the data is absolutely critical for good performance, so the system includes a complex planner that tries to choose good plans. You can use the EXPLAIN command to see what query plan the planner creates for any query. 
+
 
 
 
