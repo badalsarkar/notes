@@ -19,13 +19,6 @@ processes come and go.
 ### Operator precedence
 
 
-
-
-
-
-
-
-
 ## Logging in
 
 After installing the database software do the following-
@@ -73,6 +66,24 @@ Lists all tables in the database.
 PostgreSQL devises a query plan for each query it receives. Choosing the right plan to match the query structure and the properties of the data is absolutely critical for good performance, so the system includes a complex planner that tries to choose good plans. You can use the EXPLAIN command to see what query plan the planner creates for any query. 
 
 
+### Window Function
+
+These functions sees rows other than the current rows. Therefore, they are useful to calculation where other rows are needed. Which other rows are visible depends on the defined window. Thus it is called window function.
+
+This is comparable to the type of calculation that can be done with an aggregate function. However, window functions do not cause rows to become grouped into a single output row like non-window aggregate calls would. Instead, the rows retain their separate identities. 
+
+A window function call always contains an OVER clause directly following the window function's name and argument(s). This is what syntactically distinguishes it from a normal function or non-window aggregate. 
+
+The rows considered by a window function are those of the “virtual table” produced by the query's FROM clause as filtered by its WHERE, GROUP BY, and HAVING clauses if any. For example, a row removed because it does not meet the WHERE condition is not seen by any window function. A query can contain multiple window functions that slice up the data in different ways using different OVER clauses, but they all act on the same collection of rows defined by this virtual table.
+
+There is another important concept associated with window functions: for each row, there is a set of rows within its partition called its window frame. Some window functions act only on the rows of the window frame, rather than of the whole partition. By default, if ORDER BY is supplied then the frame consists of all rows from the start of the partition up through the current row, plus any following rows that are equal to the current row according to the ORDER BY clause. When ORDER BY is omitted the default frame consists of all rows in the partition. 
+
+Window functions are permitted only in the SELECT list and the ORDER BY clause of the query. They are forbidden elsewhere, such as in GROUP BY, HAVING and WHERE clauses. This is because they logically execute after the processing of those clauses.
+
+- [List of window functions](https://www.postgresql.org/docs/current/functions-window.html)
+- [Window function processing](https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-WINDOW)
+- [Window function call](https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS)
+- [Window clause in Select](https://www.postgresql.org/docs/current/sql-select.html#:~:text=specified%20with%20HAVING.-,WINDOW%20Clause,-The%20optional%20WINDOW)
 
 
 
