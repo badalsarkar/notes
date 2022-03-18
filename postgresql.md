@@ -65,6 +65,34 @@ Lists all tables in the database.
 
 PostgreSQL devises a query plan for each query it receives. Choosing the right plan to match the query structure and the properties of the data is absolutely critical for good performance, so the system includes a complex planner that tries to choose good plans. You can use the EXPLAIN command to see what query plan the planner creates for any query. 
 
+The plan is a tree structure consisting of plan nodes. The bottom most nodes are called `scan node`. These nodes return the raw rows from a table. To return rows from a table the table needs to be accessed. Depending on the access method the scan node type will vary. The access methods are below-
+
+- Sequential scan
+- Index scan
+- Bitmap scan
+
+:question: Is there any other access method?
+
+In addition to table rows, there are also non-table row source. For example `Values` clause and sets returned from `From` clause. There have different scan method. 
+
+:question: What are those methods?
+
+If the query requires joining, aggregation, sorting, or other operations on the raw rows, then there will be additional nodes above the scan nodes to perform these operations. 
+
+`Seq Scan on tenk1  (cost=0.00..458.00 rows=10000 width=244)`
+
+- Estimated start-up cost. This is the time expended before the output phase can begin, e.g., time to do the sorting in a sort node.
+- Estimated total cost. This is stated on the assumption that the plan node is run to completion, i.e., all available rows are retrieved. In practice a node's parent node might stop short of reading all available rows (see the LIMIT example below).
+- Estimated number of rows output by this plan node. Again, the node is assumed to be run to completion. The rows value is a little tricky because it is not the number of rows processed or scanned by the plan node, but rather the number emitted by the node. This is often less than the number scanned, as a result of filtering by any WHERE-clause conditions that are being applied at the node. Ideally the top-level rows estimate will approximate the number of rows actually returned, updated, or deleted by the query.
+- Estimated average width of rows output by this plan node (in bytes).
+
+**The costs are measured in arbitrary units determined by the [planner's cost parameters](https://www.postgresql.org/docs/9.4/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS). Traditional practice is to measure the costs in units of disk page fetches; that is, seq_page_cost is conventionally set to 1.0 and the other cost parameters are set relative to that. The examples in this section are run with the default cost parameters.**
+
+**It's important to understand that the cost of an upper-level node includes the cost of all its child nodes. It's also important to realize that the cost only reflects things that the planner cares about. In particular, the cost does not consider the time spent transmitting result rows to the client, which could be an important factor in the real elapsed time;**
+
+#### Bitmap Scan
+
+Bitmap is the mechanism of sorting the rows. There are Bitmap index scan, bitmap heap scan
 
 ### Window Function
 
