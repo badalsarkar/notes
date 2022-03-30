@@ -109,3 +109,7 @@ The default implementation of `ClientRegistrationRepository` is `InMemoryClientR
 3. Principal: The authenticated user. App remembers the principals.
 4. Granted authority: The allowed actions for an user. 
 5. Roles: Grouping of permissions
+
+## Resources
+
+- [YouTube Video- Laurentiu Spilca](https://www.youtube.com/watch?v=Of4HFbsPKqk&list=PLEocw3gLFc8XRaRBZkhBEZ_R3tmvfkWZz)
