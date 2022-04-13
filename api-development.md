@@ -43,11 +43,23 @@ Source: https://learning.oreilly.com/library/view/api-design-patterns/9781617295
 
 ## Anatomy of API design
 
-## Pagination pattern
-
 ## Long running operations
 
+### Pagination
 
+https://learning.oreilly.com/library/view/designing-web-apis/9781492026914/ch06.html#paginating_apis
+
+#### Offset based pagination
+
+This works for sql database. This is not very performant if the client needs to traverse through large dataset.
+
+#### Cursor base pagination
+
+Cursor based pagination is more performant in case of large dataset.The cursor may hold some information based on which the backend can provide next page of records.
+
+## Resources
+
+1. 
 
 
 
