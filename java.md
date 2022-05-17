@@ -225,9 +225,12 @@ counter, anotherCounter; //creates two arrays ```
 variable. <br>
 7. In multidimensional array, use the enhanced for loop the following way-
 
-```java int num[][]= new int[5][5]; for(int i[]:num){ for(int j:i){ //do something here //notice the
-  declaration of i and j } } ```
-
+```java 
+int num[][]= new int[5][5]; 
+for(int i[]:num){ for(int j:i){ //do something here //notice thedeclaration of i and j 
+  } 
+} 
+```
 
 #### String
 
