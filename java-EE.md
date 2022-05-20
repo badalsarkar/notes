@@ -44,6 +44,8 @@ Typically three tires-
 
 Java EE concentrates on the middle tire.
 
+[Read more](https://javaee.github.io/tutorial/overview004.html)
+
 #### Java Technologies Used in Web Tire
 
 1. Servlet: This are Java programming classes that process the request and construct response,
@@ -72,6 +74,42 @@ component in other applications.  JavaBeans components are called beans.
 - Beans are distributed as jar files.
 
 [Source](https://docs.oracle.com/javase/8/docs/technotes/guides/beans/index.html)
+
+### Java EE Containers
+
+The servers and containers in EE are following-
+
+- Java EE server: The runtime portion of a Java EE product. A Java EE server provides EJB and web containers.
+- EJB container: Manages the execution of enterprise beans for Java EE applications. Enterprise beans and their container run on the Java EE server.
+- Web container: Manages the execution of web pages, servlets, and some EJB components for Java EE applications. Web components and their container run on the Java EE server.
+- Application client container: Manages the execution of application client components. Application clients and their container run on the client.
+- Applet container: Manages the execution of applets. Consists of a web browser and a Java Plug-in running on the client together.
+
+[Read more](https://javaee.github.io/tutorial/overview005.html)
+
+### Java EE APIs
+
+- Enterprise JavaBeans Technology
+- Java Servlet Technology
+- Java ServerFaces Technology
+- Java ServerPages Technology
+- JavaServer Pages Standard Tag Library
+- Java Persistence API
+- Java Transactions API
+- Java API for RESTful Web Services(JAX-RS)
+- Managed Beans
+- Contexts and Dependency Injection (CDI)
+- Dependency Injection for Java
+- Java API for WebSocket
+
+[Read More](https://javaee.github.io/tutorial/overview008.html)
+
+### Java SE API available to Java EE
+
+- JDBC
+- JNDI
+
+[Read more](https://javaee.github.io/tutorial/overview009.html)
 
 ## Java Servlet Technology
 

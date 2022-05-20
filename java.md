@@ -1,50 +1,4 @@
-# Learning JAVA
-
-# Table of Contents
-
-- [Learning JAVA](#learning-java)
-- [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Data Types and Operators](#data-types-and-operators)
-    - [Int](#int)
-    - [Floating Point](#floating-point)
-    - [Literal](#literal)
-    - [Char](#char)
-      - [Unicode and Char type](#unicode-and-char-type)
-    - [Boolean](#boolean)
-    - [Initializing Variable](#initializing-variable)
-    - [Enumerated Types](#enumerated-types)
-    - [Hex, Octal, Binary](#hex-octal-binary)
-    - [Scope and Lifetime of Variable](#scope-and-lifetime-of-variable)
-    - [Operators](#operators)
-      - [Arithmatic](#arithmatic)
-    - [Type Conversion](#type-conversion)
-      - [Bitwise operator](#bitwise-operator)
-    - [Strings](#strings)
-      - [Building Strings](#building-strings)
-    - [Input Output](#input-output)
-      - [File input and output](#file-input-and-output)
-      - [Formatting Output](#formatting-output)
-    - [Program Control Statement](#program-control-statement)
-    - [Big Numbers](#big-numbers)
-    - [Classes, Objects, Methods](#classes-objects-methods)
-      - [Nested class](#nested-class)
-  - [More Data Type and Operators](#more-data-type-and-operators)
-    - [Array](#array)
-      - [String](#string)
-      - [Bitwise Operator](#bitwise-operator-1)
-          - [Java Scanner Class](#java-scanner-class)
-  - [Interface](#interface)
-    - [Lambda Expression/Closures](#lambda-expressionclosures)
-      - [Exception inside Lambda Expression](#exception-inside-lambda-expression)
-      - [Method Reference: Need to study further](#method-reference-need-to-study-further)
-      - [Constructor Reference](#constructor-reference)
-      - [Raw Type](#raw-type)
-      - [Type Erasure](#type-erasure)
-      - [Generic Method The systax is `access modifier Type parameter return type name(argument list){}`](#generic-method-the-systax-is-access-modifier-type-parameter-return-type-nameargument-list)
-      - [Generic Constructor The syntax is `<T extends Number> name(T var){};`](#generic-constructor-the-syntax-is-t-extends-number-namet-var)
-      - [Generic Interface](#generic-interface)
-      - [Bounded Types](#bounded-types)
+# JAVA
 
 ## Introduction
 
@@ -271,9 +225,12 @@ counter, anotherCounter; //creates two arrays ```
 variable. <br>
 7. In multidimensional array, use the enhanced for loop the following way-
 
-```java int num[][]= new int[5][5]; for(int i[]:num){ for(int j:i){ //do something here //notice the
-  declaration of i and j } } ```
-
+```java 
+int num[][]= new int[5][5]; 
+for(int i[]:num){ for(int j:i){ //do something here //notice thedeclaration of i and j 
+  } 
+} 
+```
 
 #### String
 
@@ -606,10 +563,8 @@ expression.
 
 #### Constructor Reference
 
+## Generics
 
-
-
-<a name="generics"></a> ## Generics
 - It parameterized type which means the type information is passed as parameter.
 - The type can only be reference type not premitive type. For example, we need to use Integer as
 type instead of int.
@@ -625,7 +580,6 @@ that.
 `public static <T extends Comparable<T>, V extends T> boolean compare(T[], V[]){}`
 
 #### Generic Constructor The syntax is `<T extends Number> name(T var){};`
-
 
 #### Generic Interface
 
@@ -802,13 +756,6 @@ with the instance of outer class| ----------------------------------------------
 
 
 ## Testing
-
-
-
-
-
-
-
 
 
 ## Resources Used 1.[Java: A beginner's guide]
