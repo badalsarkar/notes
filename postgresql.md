@@ -19,6 +19,8 @@ After installing the database software do the following-
 5. To loging to a different database `sudo -u ${username} psql -d
    ${databasename}`
 
+https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
+
 ### Some commands
 
 Once inside the postgres terminal-
