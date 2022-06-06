@@ -1,0 +1,22 @@
+@startmindmap
+<style>
+node {
+    MaximumWidth 250
+}
+</style>
+* recursion
+** types
+    *** head recursion
+        **** the recursive call is the first call
+            ***** the operation is done at function return time
+        **** not easily convertable to loop
+    *** tail recursion
+        **** the recursive call is the last
+            ***** the operation is done at function call time
+        **** easily converted to loop
+        **** loop is more efficient
+            ***** time complexity same
+            ***** space complexity is constant
+** data structure
+*** uses stack
+@endmindmap

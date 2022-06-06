@@ -1,0 +1,24 @@
+@startmindmap
+* redux
+** what
+*** central state management
+*** all the states are stored in a javascript object
+*** the state store is immutable
+** building blocks
+*** Action
+**** it is a javascript object
+****:{
+    type:"",
+    description:""
+};
+**** the event
+***** example: user login
+*** Store
+**** Where the state is stored
+*** Reducer
+**** updates store state
+**** pure functions
+** how it works
+*** store takes an action
+**** sends to reducer
+@endmindmap
