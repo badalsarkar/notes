@@ -1,0 +1,52 @@
+@startmindmap
++ React
+++ Hooks
++++[#Red] questions
+++++ What is rendering?
++++ what
+++++_ function
+++++_ allow to use state and other react feature without class
+++++_ dont' work in side class
++++ types
+++++ state hook
++++++ add local state to a component
++++++ returns pair
++++++ initial value is the argument
+++++++ it is only used for first render
+++++ effect hook (useEffect)
++++++ used for
+++++++ data fetching
+++++++ subscription
+++++++ manually changing DOM
+++++++ other side effects
+++++++ more than 1 hook can be used for a component
++++++++ action that affects other components
++++++++ these can't be done during rendering
++++++ replaces
+++++++ componentDidMount
+++++++ componentDidUpdate
+++++++ componentWillMount
++++++ runs
+++++++ after react react flushes changes to the DOM
+++++++ after first render
+++++++ and after every render thereafter
+++++ useReducer
++++++ alternative to useState
++++++ takes/arguments
+++++++ reducer
++++++++ function(state, action) => newState
+++++++ initialState
+++++++ init
++++++++ function to lazily initialize state
++++++ returns
+++++++ current state
++++++++_ if the current state is unchanged, react skip the rendering of children or firing effects
+++++++ dispatch method
++++++++ used to send an action to the reducer
++++++++ based on the action the reducer update the state
++++ rules
+++++_ don't call hooks inside loops, conditions or nested functions
+++++_ only call hooks from react function components
+++++_ don't call hooks from regular JS functions
+++++_ you can call hooks from your custome hooks
+@endmindmap

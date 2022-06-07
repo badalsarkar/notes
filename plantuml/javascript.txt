@@ -1,0 +1,6 @@
+@startmindmap
+* JS
+** Desctrcturing
+** Object literal enhancement
+** Spread operator
+@endmindmap

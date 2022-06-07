@@ -1,22 +1,29 @@
 @startmindmap
-* Functional Programming in JS
-    ** concepts
-        *** First class citizens
-            **** same as any other variable
-            **** Pass them as parameter
-            **** Assign them to variable
-            **** return them from function
-        *** Higher order function
-            **** takes a function as argument
-            **** returns a function
-        *** Function composition
-            **** small re-usable functions
-        *** Curring
-            **** ?
-        *** pure function
-        *** Immutability
-            **** library
-                ***** Immutable
-                ***** Immer
-                ***** Mori
+* Functional programming
+** Core concepts
+*** Immutability
+*** Purity
+**** Only act on arguments
+**** takes at least 1 argument
+**** always return value or function
+** Functional Programming in JS
+*** First class citizens
+**** same as any other variable
+**** Pass them as parameter
+**** Assign them to variable
+**** return them from function
+*** core concepts
+**** Higher order function
+***** takes a function as argument
+***** returns a function
+**** Function composition
+***** small re-usable functions
+**** Curring
+***** ?
+**** pure function
+**** Immutability
+***** library
+****** Immutable
+****** Immer
+****** Mori
 @endmindmap
