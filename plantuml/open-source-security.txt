@@ -1,0 +1,72 @@
+@startmindmap
+<style>
+node {
+MaximumWidth 200
+}
+</style>
+
++ open source
+++ risk factor of using OSS
++++ component inventory
+++++ Knowing what exactly compose software
+++++ dependency management solution or SBOM can help
++++ component age
++++ outdated component
+++++ delays remediation effort if there have been several major version changes
++++ known vulnerability
+++++ databases
++++++ NVD
+++++++_ publish
++++++++ CVE
+++++++++ severity measured by
++++++++++ CVSS
+++++++++++_ also represented by a vector string
+++++++++++_ owned by
++++++++++++ FIRST.org
+++++++++++_ consists of
++++++++++++ 3 metric group
+++++++++++++ base
++++++++++++++ provided by NVD
+++++++++++++ temporal
++++++++++++++ changes over time due to external events
+++++++++++++ environmental
++++++++++++++ organizational factor
+++++++++++ versions
++++++++++++ v2
+++++++++++++ vectors
++++++++++++++ Access vector (V)
++++++++++++++ Access complexity (AC)
++++++++++++++ Authentication (AU)
++++++++++++++ Confidentiality (C)
++++++++++++++ Integrity (I)
++++++++++++++ Availability (A)
++++++++++++ v3
+++++++++++++ vectors
++++++++++++++ Attack Vector (AV)
++++++++++++++ Attack complexity (AC)
++++++++++++++ Privileges required (PR)
++++++++++++++ User interaction (UI)
++++++++++++++ Scope (S)
++++++++++++++ Confidentiality (C)
++++++++++++++ Integrity (I)
++++++++++++++ Availability (A)
+++++++_ describes
++++++++ 3 types of component
+++++++++ Applications
++++++++++ libraries
++++++++++ frameworks
+++++++++ Operating Systems
+++++++++ Hardware
++++ Component type
++++ component function
++++ Component quantity
++++ repository trust
++++ license
++++ inherited risk
+
+
+legend left
+sources:
+1. https://owasp.org/www-community/Component_Analysis
+endlegend
+@endmindmap

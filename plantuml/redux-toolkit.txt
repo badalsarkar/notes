@@ -1,0 +1,23 @@
+@startmindmap
++ redux-toolbox
+++ What
++++_ standard way to use redux
+++ APIs
++++ configureStore
++++ createReducer
++++ createAction
++++ createSlice
++++ createAsyncThunk
++++ createEntityAdapter
++++ createSelector
++++ RTK query
+++++ What
++++++ used for data fetching and caching
++++++ built on top of redux toolkit
++++++ uses redux internally
+++++ apis
++++++ createApi
++++++ fetchBaseQuery
++++++ ApiProvider
++++++ setUpListeners
+@endmindmap

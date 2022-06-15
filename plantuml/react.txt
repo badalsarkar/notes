@@ -8,7 +8,7 @@
 ++++_ allow to use state and other react feature without class
 ++++_ dont' work in side class
 +++ types
-++++ state hook
+++++ state hook (useState)
 +++++ add local state to a component
 +++++ returns pair
 +++++ initial value is the argument
@@ -19,9 +19,9 @@
 ++++++ subscription
 ++++++ manually changing DOM
 ++++++ other side effects
-++++++ more than 1 hook can be used for a component
 +++++++ action that affects other components
 +++++++ these can't be done during rendering
+++++++ more than 1 hook can be used for a component
 +++++ replaces
 ++++++ componentDidMount
 ++++++ componentDidUpdate
