@@ -63,13 +63,6 @@ processes come and go.
 
 ## Recursive Queries
 
-```plantuml
-@startmindmap
-* test
-** another
-endmindmap
-```
-
 ## Performance
 
 ### EXPLAIN

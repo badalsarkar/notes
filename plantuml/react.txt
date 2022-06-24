@@ -44,6 +44,8 @@
 ++++++ dispatch method
 +++++++ used to send an action to the reducer
 +++++++ based on the action the reducer update the state
+++++ useParams
+++++ useNavigate
 +++ rules
 ++++_ don't call hooks inside loops, conditions or nested functions
 ++++_ only call hooks from react function components
