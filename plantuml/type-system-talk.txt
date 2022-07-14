@@ -1,0 +1,61 @@
+@startmindmap
+<style>
+node {
+    MaximumWidth 250
+}
+</style>
++ Type system
+-- questions
+---[#red] what is metaprogramming?
+++ fundamentals features?
++++ supports
+++++ type safety
++++++_ "a safe language is the one that protects its own abstractions" - Pierce(TaPL)
++++++ unsafe behaviour
+++++++ dereference null pointer
+++++++ access array out of bound
+++++++ use uninitialized variable
+++++++ cast between type
+++++++ not checking parameter list
+++++++_ and these are not captured at compile time
+++++++_ and in runtime the program fails
++++++ safe behaviour
+++++++ Runtime exception
++++++++_ for
+++++++++ Null pointer
+++++++++ array out of bound
+++++++ not allowing uninitialized variable
+++++++ compile time parameter list check
+++++ static vs dynamic type checking
++++++ static
+++++++_ checking the correctness of program at compile time
+++++++ Early feedback
+++++++ More reliable
+++++++ More optimizable
+++++++ Longer edit-compile-test cycle
++++++ dynamic
+++++++ shorter edit-compile-test cycle
+++++++ more flexible
+++++++ good for prototyping
+++++++ better for metaprogramming?
+++++++ require lots of unit test
+++++ strong vs weak type
++++++_ ability to re-interpret type of variable at runtime
+++++ type inference
++++++ a feature of static typed language
+++ Rich type system features
++++ function as type
+++++_ aka
++++++ higher order function
++++ curring
+++++ patial function application
+++++ providing function arguments in differnt steps
+****:
+<code>
+ def greet(prefix: String)(name:String):String={...}
+ val helloGreet = greet("hello")
+ helloGreet("badal")
+</code>
+;
++++ Algebric data type
+@endmindmap

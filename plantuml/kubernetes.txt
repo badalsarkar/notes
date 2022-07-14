@@ -1,0 +1,4 @@
+@startmindmap
++ kubernetes
+++ what
+@endmindmap
