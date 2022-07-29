@@ -58,4 +58,20 @@ node {
 </code>
 ;
 +++ Algebric data type
+++++ Product type
++++++_ Tuple, Class
+++++ Sum type
++++++_ A|B, either A or B but not both
++++++_ Can be used to replace conditional
++++ Polymorphism
+++++ Parametric polymorphism
++++++_ Generics
+++++ Subtype polymorphism
++++++_ inheritance
+++++ Ad hoc polymorphism (Type class)?
++++ Existential type
+++++_ Parameterized type, but we don't care about the type of the parameter
++++ Type variance
+++++ co-variance
+++++ contra variant
 @endmindmap

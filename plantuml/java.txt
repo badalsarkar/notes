@@ -1,0 +1,47 @@
+@startmindmap
+<style>
+node {
+MaximumWidth 200
+}
+</style>
++ Java
+++ Type system
++++ attributes
+++++_ Statically typed
+++++_ Strongly typed
++++ 2 Kind of types
+++++ primitive types
++++++ 2 kinds
+++++++ boolean types
+++++++ numeric types
++++++++_ byte
++++++++_ short
++++++++_ int
++++++++_ long
++++++++_ char
++++++++_ float
++++++++_ double
++++++ values
+++++++ primitive values
+++++ reference types
++++++ 4 kinds
+++++++ class type
+++++++ interface type
+++++++ array type
+++++++ type variables
++++++ values
+++++++ reference values
++++++++ pointers to object
+++++++++ An object is dynamically created instace of a class or dynamically created array
+++++++++ All object support methods of class Object
+++++++++ String literal are represented by String object
+++++++++ An object can be created explicitly or implicitly
++++++++ null reference
++++++ Object class
+++++++_ super type of all claesses
++++++ Class object
+++++++_ represents the class of the object
++++++ String class
+++++++_ represents sequence of unicode code points
+++++++_ String literals are reference to instance of String class
+@endmindmap
