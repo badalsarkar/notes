@@ -49,17 +49,17 @@ MaximumWidth 200
 ++++ Type equality [[https://docs.oracle.com/javase/specs/jls/se13/html/jls-4.html#jls-4.3.4 (Oracle Doc)]]
 +++++ at runtime
 +++++ at compile time
-+++[#red] Type variables
-+++[#red] Parameterized types
-+++[#red] Type Erasure
++++[#Red] Type variables
++++[#Red] Parameterized types
++++[#Red] Type Erasure
 ++++ what
 +++++ mapping from types to types
 ++++++ the from type possible include type variable and parameterized types
 ++++++ the to type are never type variable or parameterized types
-+++[#red] Reifiable Types
++++[#Red] Reifiable Types
 ++++ Types completely available at runtime
-+++++[#red] Some type information are lost at compile time ?
-+++++[#red] not all types are available ar runtime
++++++[#Red] Some type information are lost at compile time ?
++++++[#Red] not all types are available ar runtime
 ++++ An intersection type is not reifiable
 +++ Raw types
 +++ Intersection types
