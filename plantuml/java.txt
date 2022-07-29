@@ -5,43 +5,72 @@ MaximumWidth 200
 }
 </style>
 + Java
+- questions
 ++ Type system
 +++ attributes
 ++++_ Statically typed
 ++++_ Strongly typed
-+++ 2 Kind of types
-++++ primitive types
-+++++ 2 kinds
-++++++ boolean types
-++++++ numeric types
-+++++++_ byte
-+++++++_ short
-+++++++_ int
-+++++++_ long
-+++++++_ char
-+++++++_ float
-+++++++_ double
-+++++ values
-++++++ primitive values
-++++ reference types
-+++++ 4 kinds
-++++++ class type
-++++++ interface type
-++++++ array type
-++++++ type variables
-+++++ values
-++++++ reference values
-+++++++ pointers to object
-++++++++ An object is dynamically created instace of a class or dynamically created array
-++++++++ All object support methods of class Object
-++++++++ String literal are represented by String object
-++++++++ An object can be created explicitly or implicitly
-+++++++ null reference
-+++++ Object class
-++++++_ super type of all claesses
-+++++ Class object
-++++++_ represents the class of the object
-+++++ String class
-++++++_ represents sequence of unicode code points
-++++++_ String literals are reference to instance of String class
++++ primitive types
+++++ 2 kinds
++++++ boolean types
++++++ numeric types
+++++++_ byte
+++++++_ short
+++++++_ int
+++++++_ long
+++++++_ char
+++++++_ float
+++++++_ double
+++++ values
++++++ primitive values
++++ reference types
+++++ 4 kinds
++++++ class type
++++++ interface type
++++++ array type
++++++ type variables
+++++ values
++++++ reference values
+++++++ pointers to object
++++++++ An object is dynamically created instace of a class or dynamically created array
++++++++ All object support methods of class Object
++++++++ String literal are represented by String object
++++++++ An object can be created explicitly or implicitly
+++++++ null reference
+++++ Object class
++++++_ super type of all claesses
+++++ Class object
++++++_ represents the class of the object
+++++ String class
++++++_ represents sequence of unicode code points
++++++_ String literals are reference to instance of String class
+++++ Type equality [[https://docs.oracle.com/javase/specs/jls/se13/html/jls-4.html#jls-4.3.4 (Oracle Doc)]]
++++++ at runtime
++++++ at compile time
++++[#red] Type variables
++++[#red] Parameterized types
++++[#red] Type Erasure
+++++ what
++++++ mapping from types to types
+++++++ the from type possible include type variable and parameterized types
+++++++ the to type are never type variable or parameterized types
++++[#red] Reifiable Types
+++++ Types completely available at runtime
++++++[#red] Some type information are lost at compile time ?
++++++[#red] not all types are available ar runtime
+++++ An intersection type is not reifiable
++++ Raw types
++++ Intersection types
+++++ The members are the members of the class or interface it includes
++++ Variables
+++++ a storage location and has associated type
+++++ 8 kinds
++++++ class variable
++++++ instance variable
++++++ array components
++++++ method parameter
++++++ constructor parameter
++++++ lambda parameter
++++++ exception parameter
++++++ local variables
 @endmindmap
