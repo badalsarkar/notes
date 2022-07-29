@@ -1,9 +1,11 @@
 @startmindmap
+
 <style>
 node {
 MaximumWidth 200
 }
 </style>
+
 + Java
 - questions
 ++ Type system
