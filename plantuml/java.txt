@@ -7,7 +7,7 @@ MaximumWidth 200
 </style>
 
 + Java
-- questions
+-- questions
 ++ Type system
 +++ attributes
 ++++_ Statically typed
