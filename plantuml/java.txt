@@ -1,5 +1,4 @@
 @startmindmap
-
 <style>
 node {
 MaximumWidth 200
@@ -46,7 +45,7 @@ MaximumWidth 200
 ++++ String class
 +++++_ represents sequence of unicode code points
 +++++_ String literals are reference to instance of String class
-++++ Type equality [[ https://docs.oracle.com/javase/specs/jls/se13/html/jls-4.html#jls-4.3.4 (Oracle Doc) ]]
+++++ Type equality
 +++++ at runtime
 +++++ at compile time
 +++[#Red] Type variables
