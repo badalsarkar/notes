@@ -1,0 +1,8 @@
+@startmindmap
++ Java Array
+++ what
++++ Object
++++ dynamically created
++++ contains 0 or more variables(component)
++++ components have same types
+@endmindmap

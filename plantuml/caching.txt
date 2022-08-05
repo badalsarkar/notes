@@ -1,0 +1,17 @@
+@startmindmap
++ Caching
+++ Types
++++ Application level caching
+++++ what
++++++ store result of queries in memory
++++++ improve request responsiveness
++++++ costs less
+++++ tools
++++++ memcached
+++++++ distributed hash table
++++++ Redis
+++++++ distributed hash table
++++++ others
++++ Web caching
+++++ Use HTTP protocol to Cache the result
+@endmindmap

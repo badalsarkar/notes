@@ -1,0 +1,65 @@
+@startmindmap
+
+<style>
+node {
+MaximumWidth 200
+}
+</style>
+
++ Java Program Execution
+++ start up
++++ load a specified class or interface
+++++ invoke "main" method in this class or interface
++++++ pass it a single argument- String[]
++++ steps
+++++ 1. loading
++++++ implemented by
+++++++ ClassLoader
+++++++ Sub-class of ClassLoader
++++++ steps
+++++++ 1. JVM tries to find binary representation of specified class
++++++++ JVM uses a class loader to find such representation
++++++++ the binary file is created by Java compiler
+++++++++ The format of class file is specified by JVM specification
++++++++ or create such file on the fly
+++++++ 2. JVM creates a Class object from that binary file
++++++++ ClassLoader#defineClass may be used to construct Class object from class file format
+++++ 2. Linking
++++++ involves
+++++++ verification
++++++++ checks
+++++++++ loaded binary is well-formed, with proper symbol table
+++++++++ the code obeys the semantic requirement of java language and JVM
+++++++ preparation
++++++++ involves
+++++++++ allocation of static resource and any data structure used internally by JVM
+++++++++ example: method tables
+++++++ resolution(optional)
++++++++ resolution of references between classes
++++++++ before a symbolic reference can be used, it must undergo resolution step
++++++++ this depends on implementation of JVM
++++++++ an implementation can choose to do resolution when a symbolic reference is used rather than during linkage time
++++++++ errors
+++++++++ IllegalAccessError
+++++++++ InstantiationError
+++++++++ NoSuchFieldError
+++++++++ NoSuchMethodError
+++++ 3. Initialization
++++++_ at this point JVM still trying to execute the main method
++++++_ before it can do that it need to initialize the Class and the direct super class of the class recursively
++++++_ for each superclass JVM need to do loading, verification and preparation
++++++ class initialization
+++++++ static initializers
+++++++ initializer for static fields
++++++ interface initialization
+++++++ initializers for fields
+++++ 4. Invoke main method
+++ New class instance
++++ implicitly created when
+++++ There is a string literal
+++++ execution of operation that cause boxing conversion
+++++ execution of concatenation operator
+++++ evaluation of method reference expression
+++++ evaluation of lambda expression
+
+@endmindmap

@@ -67,6 +67,9 @@ MaximumWidth 200
 ++++ a storage location and has associated type
 ++++ 8 kinds
 +++++ class variable
+++++++ declared
++++++++ with "Static" keyword in class
++++++++ without "Static" keyword in interface
 +++++ instance variable
 +++++ array components
 +++++ method parameter

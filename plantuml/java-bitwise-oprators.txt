@@ -1,0 +1,26 @@
+@startmindmap
++ Bitwise Operators
+++ what
++++ Perform operation on integer at individual bit level
+++ operators
++++ "|" bitwise OR
+++++ The result is 1 is one of the input in 1
++++ "&" bitwise AND
+++++ The result is 1 if both of the input is 1
++++ "^" bitwise XOR
+++++ The result is 0 if both input is either 1 or 0
++++ "~" bitwise Compliment
+++++ change 1 to 0 and 0 to 1
++++ "<<" left shift
+++++ shifts all bits to left by specified number
+++++ discards left most (Most significant bit)
+++++ add 0 to the right most bit(Leat significant bit)
++++ ">>" signed right shift
+++++ shifts all the bits to the right by specified number
+++++ discards the right most bit
+++++ when a bit is shifted, the left most bit is replaced with sign bit
++++ ">>>" unsigned right shift
+++++ shifts all the bits to right by specified number
+++++ discards the right most bit
+++++ replace the vacant left position with 0
+@endmindmap
