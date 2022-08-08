@@ -4,14 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "e2ce797a820bd66d",
+        "id": "f32e1451dc67ef5e",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "mindmapview",
           "state": {
-            "file": "testmindmap/Untitled.md.md",
-            "mode": "source",
-            "source": false
+            "file": "mindmap/authentication-authorization.md"
           }
         }
       }
@@ -61,7 +59,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "4f953b2eb2288670",
@@ -77,7 +76,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "testmindmap/Untitled.md.md",
+                "file": "mindmap/authentication-authorization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +93,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "testmindmap/Untitled.md.md",
+                "file": "mindmap/authentication-authorization.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "testmindmap/Untitled.md.md"
+                "file": "mindmap/authentication-authorization.md"
               }
             }
           }
@@ -128,8 +127,9 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "e2ce797a820bd66d",
+  "active": "f32e1451dc67ef5e",
   "lastOpenFiles": [
+    "mindmap/authentication-authorization.md",
     "testmindmap/Untitled.md.md",
     "java.md",
     "jdbc.md",
@@ -138,7 +138,6 @@
     "note-softwareDesign.md",
     "integration-test.md",
     "images/code-quadrants-testing.png",
-    "mindmap/react.png",
-    "mindmap/caching.png"
+    "mindmap/react.png"
   ]
 }
