@@ -1,0 +1,144 @@
+{
+  "main": {
+    "id": "17a5182db60bc633",
+    "type": "split",
+    "children": [
+      {
+        "id": "e2ce797a820bd66d",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "testmindmap/Untitled.md.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ef8584b6896cc2c1",
+    "type": "split",
+    "children": [
+      {
+        "id": "8fc2e355dee237f9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1c8fa8a8c2426c46",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "df2e07391ce07429",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d1fbed42fd1e82fb",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4f953b2eb2288670",
+    "type": "split",
+    "children": [
+      {
+        "id": "4784ca3ec99191e0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "16b253c8cbd36a8e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "testmindmap/Untitled.md.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c7a9eeedda966798",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "testmindmap/Untitled.md.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c824d699ccf6a8a4",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ee1927c915570ebf",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "testmindmap/Untitled.md.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "e2ce797a820bd66d",
+  "lastOpenFiles": [
+    "testmindmap/Untitled.md.md",
+    "java.md",
+    "jdbc.md",
+    "java-effective-java.md",
+    "java-jvm.md",
+    "note-softwareDesign.md",
+    "integration-test.md",
+    "images/code-quadrants-testing.png",
+    "mindmap/react.png",
+    "mindmap/caching.png"
+  ]
+}

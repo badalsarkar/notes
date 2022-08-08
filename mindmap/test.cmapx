@@ -1,0 +1,10 @@
+<map id="test_map" name="test_map">
+<area shape="rect" id="id1" href="http://plantuml.com/sequence" title="http://plantuml.com/sequence" alt="" coords="362,63,394,79"/>
+<area shape="rect" id="id2" href="http://plantuml.com/sequence" title="http://plantuml.com/sequence" alt="" coords="362,203,394,220"/>
+<area shape="rect" id="id3" href="http://plantuml.com/start" title="Tooltip for message" alt="" coords="309,131,370,146"/>
+<area shape="rect" id="id4" href="http://plantuml.com/start" title="http://plantuml.com/start" alt="" coords="92,169,175,185"/>
+<area shape="rect" id="id5" href="http://plantuml.com/start" title="http://plantuml.com/start" alt="" coords="102,99,209,114"/>
+<area shape="rect" id="id6" href="http://plantuml.com/start" title="http://plantuml.com/start" alt="" coords="236,96,375,119"/>
+<area shape="rect" id="id7" href="http://plantuml.com/start" title="http://plantuml.com/start" alt="" coords="230,131,471,154"/>
+<area shape="rect" id="id8" href="http://plantuml.com/sequence" title="http://plantuml.com/sequence" alt="" coords="212,5,240,238"/>
+</map>
