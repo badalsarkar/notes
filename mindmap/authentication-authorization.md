@@ -15,9 +15,9 @@ mindmap-plugin: basic
                - authentication done be Authorization server
                - verifies identity of end user
                - obtain basic profile information about end user
-                    in REST like manner
+                     in REST like manner
                - receive information about authenticated sessions
-                    and end users
+                     and end users
          - extenstion to OAuth2
          - Only focused on Authentication
          - introduces
@@ -113,7 +113,7 @@ mindmap-plugin: basic
          - similar to Authorization Code flow
       - Sub title
 
-## Spring security
+## [[spring-security]] Spring security
 - Built in OAuth Support
    - Recommended for new app
 - Spring Security OAuth

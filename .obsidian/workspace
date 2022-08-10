@@ -4,13 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f32e1451dc67ef5e",
+        "id": "c204ad94f6bec4a8",
         "type": "leaf",
         "state": {
-          "type": "mindmapview",
-          "state": {
-            "file": "mindmap/authentication-authorization.md"
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -38,7 +36,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "job",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -59,8 +57,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "4f953b2eb2288670",
@@ -76,7 +73,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "mindmap/authentication-authorization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +89,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "mindmap/authentication-authorization.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -115,9 +110,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "mindmap/authentication-authorization.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -127,17 +120,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "f32e1451dc67ef5e",
+  "active": "c204ad94f6bec4a8",
   "lastOpenFiles": [
+    "job-learning.md",
+    "mindmap/caching.png",
     "mindmap/authentication-authorization.md",
-    "testmindmap/Untitled.md.md",
-    "java.md",
-    "jdbc.md",
-    "java-effective-java.md",
-    "java-jvm.md",
-    "note-softwareDesign.md",
-    "integration-test.md",
-    "images/code-quadrants-testing.png",
-    "mindmap/react.png"
+    "hibernate-updated.md",
+    "spring-security.md",
+    "Untitled.md",
+    "test.png",
+    "test.svg",
+    "sql.md",
+    "spring-v2.md"
   ]
 }
