@@ -15,9 +15,9 @@ mindmap-plugin: basic
                - authentication done be Authorization server
                - verifies identity of end user
                - obtain basic profile information about end user
-                     in REST like manner
+                      in REST like manner
                - receive information about authenticated sessions
-                     and end users
+                      and end users
          - extenstion to OAuth2
          - Only focused on Authentication
          - introduces
@@ -98,6 +98,12 @@ mindmap-plugin: basic
          - Secure
          - Makes heavy use of browser ridirects and back channels
          - User typically approves the scopes to the client
+         - [flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.1)
+            - 1. Client initiate authentication by redirecting the user-agent to authz server auth endpoint
+            - 2. Auth server completes the auth and permission
+            - 3. Auth server re-direct user agent to the re-direct url provided by client and send auth token
+            - 4. Client send request to auth server access token endpoint with the auth toke from previous step
+            - 5. Auth server authenticate client and provide access token
       - Device code
          - Televisions and env with limited input capability
       - Refresh

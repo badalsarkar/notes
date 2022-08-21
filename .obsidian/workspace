@@ -4,11 +4,13 @@
     "type": "split",
     "children": [
       {
-        "id": "c204ad94f6bec4a8",
+        "id": "68c9b9cd8cf997a2",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "mindmapview",
+          "state": {
+            "file": "interviewPrep.md"
+          }
         }
       }
     ],
@@ -36,7 +38,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "job",
+                "query": "system-",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -57,7 +59,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "4f953b2eb2288670",
@@ -73,6 +76,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "interviewPrep.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +93,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "interviewPrep.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -110,7 +115,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "interviewPrep.md"
+              }
             }
           }
         ]
@@ -120,17 +127,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "c204ad94f6bec4a8",
+  "active": "68c9b9cd8cf997a2",
   "lastOpenFiles": [
-    "job-learning.md",
-    "mindmap/caching.png",
-    "mindmap/authentication-authorization.md",
-    "hibernate-updated.md",
+    "interviewPrep.md",
+    "algorithm-complexity-analysis.md",
+    "images/tree-terminology.png",
+    "images/power-of-2-table.png",
+    "algorithm-complexity-analysis time and space complexity.md",
+    "system-design.md",
     "spring-security.md",
-    "Untitled.md",
-    "test.png",
-    "test.svg",
-    "sql.md",
-    "spring-v2.md"
+    "backend-engineer-skills.md",
+    "softwareDesign.md",
+    "softwareDesign-Coursera.md"
   ]
 }
