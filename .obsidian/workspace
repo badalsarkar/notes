@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "68c9b9cd8cf997a2",
+        "id": "7b1a2ae188bbc791",
         "type": "leaf",
         "state": {
           "type": "mindmapview",
           "state": {
-            "file": "interviewPrep.md"
+            "file": "kafka.md"
           }
         }
       }
@@ -38,7 +38,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "system-",
+                "query": "kafka",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,7 +76,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "interviewPrep.md",
+                "file": "kafka.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +93,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "interviewPrep.md",
+                "file": "kafka.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -116,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "interviewPrep.md"
+                "file": "kafka.md"
               }
             }
           }
@@ -127,8 +127,9 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "68c9b9cd8cf997a2",
+  "active": "7b1a2ae188bbc791",
   "lastOpenFiles": [
+    "kafka.md",
     "interviewPrep.md",
     "algorithm-complexity-analysis.md",
     "images/tree-terminology.png",
@@ -137,7 +138,6 @@
     "system-design.md",
     "spring-security.md",
     "backend-engineer-skills.md",
-    "softwareDesign.md",
-    "softwareDesign-Coursera.md"
+    "softwareDesign.md"
   ]
 }
