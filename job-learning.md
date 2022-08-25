@@ -13,14 +13,15 @@
 
 ## backend
 - Database
-   - PostgreSQL
+   - [PostgreSQL](./postgresql.md)
       - Cleaning up database
       - functions
       - Query optimization
          - query planner
       - table
          - temp table
-         - unlogged table
+         - [unlogged table](https://www.compose.com/articles/faster-performance-with-unlogged-tables-in-postgresql/)
+            - faster
 - framework
    - spring
       - spring-webflux
@@ -39,7 +40,7 @@
    - redux toolkit
 
 ## general
-- Always ask question when you start  with something
+- Always ask question when you start  with something
 - look at sample data
 
 ## test
