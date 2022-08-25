@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "7b1a2ae188bbc791",
+        "id": "4b7a5e6db27f6cb8",
         "type": "leaf",
         "state": {
           "type": "mindmapview",
           "state": {
-            "file": "kafka.md"
+            "file": "job-learning.md"
           }
         }
       }
@@ -38,7 +38,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "kafka",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,7 +76,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "kafka.md",
+                "file": "job-learning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +93,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "kafka.md",
+                "file": "job-learning.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -116,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "kafka.md"
+                "file": "job-learning.md"
               }
             }
           }
@@ -127,17 +127,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "7b1a2ae188bbc791",
+  "active": "4b7a5e6db27f6cb8",
   "lastOpenFiles": [
-    "kafka.md",
+    "job-learning.md",
+    "kotlin-coroutine-async-time-and-resources.md",
+    "kotlin.md",
+    "spring-r2dbc.md",
     "interviewPrep.md",
+    "kafka.md",
     "algorithm-complexity-analysis.md",
     "images/tree-terminology.png",
     "images/power-of-2-table.png",
-    "algorithm-complexity-analysis time and space complexity.md",
-    "system-design.md",
-    "spring-security.md",
-    "backend-engineer-skills.md",
-    "softwareDesign.md"
+    "algorithm-complexity-analysis time and space complexity.md"
   ]
 }

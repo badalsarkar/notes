@@ -1,8 +1,57 @@
 ---
-		mindmap-plugin: rich
+		mindmap-plugin: basic
 ---
 
 # Job Learning
-``` json
-{"mindData":[[{"id":"2c6bcb09-7422-1c20","text":"job","isRoot":true,"main":true,"x":4000,"y":4000,"isExpand":true,"layout":{"layoutName":"mindmap2","direct":"mindmap"},"stroke":""},{"id":"9c70f604-578c-dbf2","text":"language","stroke":"#e892ae","x":4114,"y":3719,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"79b9ba1e-4efc-5bc9","text":"programming style","stroke":"#45c0d1","x":4114,"y":3792,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"1030b022-e6dd-c16d","text":"backend","stroke":"#c3d657","x":4114,"y":4036,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"dd705eac-81f0-8754","text":"frontend","stroke":"#45c0d1","x":4114,"y":4293,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"6f685d68-900d-aeca","text":"general","stroke":"#a0f7d0","x":3876,"y":3895,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"785fa1d1-2776-6ef1","text":"test","stroke":"#ea9fb6","x":3909,"y":3968,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20"},{"id":"fe817bf8-cfe4-b9e8","text":"tools","stroke":"#ea9fb6","x":3899,"y":4117,"layout":null,"isExpand":true,"pid":"2c6bcb09-7422-1c20","main":false},{"id":"1371594f-801b-e460","text":"kotlin","stroke":"#e892ae","x":4243,"y":3706,"layout":null,"isExpand":true,"pid":"9c70f604-578c-dbf2"},{"id":"b9fab13f-b312-fbb8","text":"typescript","stroke":"#e892ae","x":4243,"y":3744,"layout":null,"isExpand":true,"pid":"9c70f604-578c-dbf2"},{"id":"c9dd450b-fee0-85f7","text":"reactive programming","stroke":"#45c0d1","x":4322,"y":3798,"layout":null,"isExpand":true,"pid":"79b9ba1e-4efc-5bc9"},{"id":"f5990939-cec1-175c","text":"Database","stroke":"#c3d657","x":4237,"y":3928,"layout":null,"isExpand":true,"pid":"1030b022-e6dd-c16d"},{"id":"295b725f-f1cc-258b","text":"framework","stroke":"#c3d657","x":4237,"y":4137,"layout":null,"isExpand":true,"pid":"1030b022-e6dd-c16d"},{"id":"aa5c03b0-6944-34e6","text":"framework","stroke":"#45c0d1","x":4234,"y":4280,"layout":null,"isExpand":true,"pid":"dd705eac-81f0-8754"},{"id":"864c3307-54b0-ea8b","text":"library","stroke":"#45c0d1","x":4234,"y":4318,"layout":null,"isExpand":true,"pid":"dd705eac-81f0-8754"},{"id":"06fb03ad-29bc-f719","text":"Always ask question when you start  with something","stroke":"#a0f7d0","x":3469,"y":3882,"layout":null,"isExpand":true,"pid":"6f685d68-900d-aeca"},{"id":"671fafe1-d0a7-fc00","text":"look at sample data","stroke":"#a0f7d0","x":3699,"y":3920,"layout":null,"isExpand":true,"pid":"6f685d68-900d-aeca"},{"id":"efdfbee6-f9a6-83dd","text":"framework","stroke":"#ea9fb6","x":3796,"y":3974,"layout":null,"isExpand":true,"pid":"785fa1d1-2776-6ef1"},{"id":"13a37562-4f75-c433","text":"flyway migration","stroke":"#ea9fb6","x":3746,"y":4028,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"0bfdaaf9-2147-1c9c","text":"docker","stroke":"#ea9fb6","x":3813,"y":4066,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"192badb7-d480-a212","text":"OpenShift","stroke":"#ea9fb6","x":3790,"y":4104,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"753fb20d-e2e7-ac40","text":"build","stroke":"#ea9fb6","x":3827,"y":4142,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"65b84bf1-433f-f964","text":"pipeline","stroke":"#ea9fb6","x":3806,"y":4180,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"14104c2b-caa4-f819","text":"test container","stroke":"#ea9fb6","x":3765,"y":4218,"layout":null,"isExpand":true,"pid":"fe817bf8-cfe4-b9e8"},{"id":"243519c5-3746-c3e8","text":"PostgreSQL","stroke":"#c3d657","x":4344,"y":3928,"layout":null,"isExpand":true,"pid":"f5990939-cec1-175c"},{"id":"5a83a723-9793-38c4","text":"spring","stroke":"#c3d657","x":4350,"y":4137,"layout":null,"isExpand":true,"pid":"295b725f-f1cc-258b"},{"id":"eb8c2b43-df85-d903","text":"react","stroke":"#45c0d1","x":4347,"y":4280,"layout":null,"isExpand":true,"pid":"aa5c03b0-6944-34e6"},{"id":"8e0aa0aa-81b5-6d06","text":"redux toolkit","stroke":"#45c0d1","x":4316,"y":4318,"layout":null,"isExpand":true,"pid":"864c3307-54b0-ea8b"},{"id":"0ffa87c1-09d6-74e3","text":"Kotest","stroke":"#ea9fb6","x":3713,"y":3974,"layout":null,"isExpand":true,"pid":"efdfbee6-f9a6-83dd"},{"id":"a2e4d5c7-f15e-12a4","text":"maven","stroke":"#ea9fb6","x":3741,"y":4142,"layout":null,"isExpand":true,"pid":"753fb20d-e2e7-ac40"},{"id":"31cfe3e1-4360-6e66","text":"jenkins","stroke":"#ea9fb6","x":3718,"y":4180,"layout":null,"isExpand":true,"pid":"65b84bf1-433f-f964"},{"id":"57f34ed7-301a-ac6a","text":"Cleaning up database","stroke":"#c3d657","x":4469,"y":3852,"layout":null,"isExpand":true,"pid":"243519c5-3746-c3e8"},{"id":"4eb8d5e3-80e7-8dfe","text":"functions","stroke":"#c3d657","x":4469,"y":3890,"layout":null,"isExpand":true,"pid":"243519c5-3746-c3e8"},{"id":"5b35c88a-4ab6-0cf7","text":"Query optimization","stroke":"#c3d657","x":4469,"y":3928,"layout":null,"isExpand":true,"pid":"243519c5-3746-c3e8"},{"id":"0a5dfd6c-47e7-446b","text":"table","stroke":"#c3d657","x":4469,"y":3985,"layout":null,"isExpand":true,"pid":"243519c5-3746-c3e8"},{"id":"90b613e8-e6ce-03ca","text":"spring-webflux","stroke":"#c3d657","x":4432,"y":4042,"layout":null,"isExpand":true,"pid":"5a83a723-9793-38c4"},{"id":"115a5c8d-49b7-fad7","text":"spring-r2dbc","stroke":"#c3d657","x":4432,"y":4080,"layout":null,"isExpand":true,"pid":"5a83a723-9793-38c4"},{"id":"660124f2-0778-7cf9","text":"spring security","stroke":"#c3d657","x":4432,"y":4175,"layout":null,"isExpand":true,"pid":"5a83a723-9793-38c4"},{"id":"f185391f-2cce-f57a","text":"query planner","stroke":"#c3d657","x":4640,"y":3928,"layout":null,"isExpand":true,"pid":"5b35c88a-4ab6-0cf7"},{"id":"f4f6fb54-56f7-abfb","text":"temp table","stroke":"#c3d657","x":4542,"y":3966,"layout":null,"isExpand":true,"pid":"0a5dfd6c-47e7-446b"},{"id":"9d631b52-30fb-4a0e","text":"unlogged table","stroke":"#c3d657","x":4542,"y":4004,"layout":null,"isExpand":true,"pid":"0a5dfd6c-47e7-446b"},{"id":"0c2ed5a3-d411-4b8c","text":"spring security","stroke":"#c3d657","x":4573,"y":4175,"layout":null,"isExpand":true,"pid":"660124f2-0778-7cf9"},{"id":"4bd5b288-6330-6ff8","text":"fundamental","stroke":"#c3d657","x":4714,"y":4118,"layout":null,"isExpand":true,"pid":"0c2ed5a3-d411-4b8c"},{"id":"8cc6c0dc-c3c9-ca60","text":"custom imple","stroke":"#c3d657","x":4714,"y":4156,"layout":null,"isExpand":true,"pid":"0c2ed5a3-d411-4b8c"},{"id":"c3cbe966-d62b-9d45","text":"OAuth","stroke":"#c3d657","x":4714,"y":4194,"layout":null,"isExpand":true,"pid":"0c2ed5a3-d411-4b8c"},{"id":"18b25b21-9f8e-d753","text":"OIDC","stroke":"#c3d657","x":4714,"y":4232,"layout":null,"isExpand":true,"pid":"0c2ed5a3-d411-4b8c"}]],"induceData":[],"wireFrameData":[],"relateLinkData":[],"calloutData":[]}
-```
+
+## language
+- kotlin
+- typescript
+
+## programming style
+- reactive programming
+
+## backend
+- Database
+   - PostgreSQL
+      - Cleaning up database
+      - functions
+      - Query optimization
+         - query planner
+      - table
+         - temp table
+         - unlogged table
+- framework
+   - spring
+      - spring-webflux
+      - spring-r2dbc
+      - spring security
+         - spring security
+            - fundamental
+            - custom imple
+            - OAuth
+            - OIDC
+
+## frontend
+- framework
+   - react
+- library
+   - redux toolkit
+
+## general
+- Always ask question when you start  with something
+- look at sample data
+
+## test
+- framework
+   - Kotest
+
+## tools
+- flyway migration
+- docker
+- OpenShift
+- build
+   - maven
+- pipeline
+   - jenkins
+- test container

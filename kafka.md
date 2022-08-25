@@ -70,3 +70,7 @@ mindmap-plugin: basic
    - Data integration
 - Kafka Streams
    - for stream processing
+
+## installation
+- Apache Zookeeper
+   - used by Kafka to store metadata about the cluster
