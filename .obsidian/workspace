@@ -4,13 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4b7a5e6db27f6cb8",
+        "id": "5448cecb936a52e1",
         "type": "leaf",
         "state": {
-          "type": "mindmapview",
-          "state": {
-            "file": "job-learning.md"
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -76,7 +74,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "job-learning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +90,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "job-learning.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -115,9 +111,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "job-learning.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -127,7 +121,7 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "4b7a5e6db27f6cb8",
+  "active": "5448cecb936a52e1",
   "lastOpenFiles": [
     "job-learning.md",
     "kotlin-coroutine-async-time-and-resources.md",
