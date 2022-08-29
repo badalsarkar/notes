@@ -4,13 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5448cecb936a52e1",
+        "id": "8f8c7c640c9565cc",
         "type": "leaf",
         "state": {
-          "type": "mindmapview",
-          "state": {
-            "file": "job-learning.md"
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -75,7 +73,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "job-learning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -92,7 +89,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "job-learning.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -114,9 +110,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "job-learning.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -126,17 +120,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "5448cecb936a52e1",
+  "active": "8f8c7c640c9565cc",
   "lastOpenFiles": [
+    "interview-prep-test.md",
+    "integration-test.md",
+    "graph-tree.md",
+    "interviewPrep.md",
+    "psql-commands.md",
     "postgresql.md",
     "job-learning.md",
     "kotlin-coroutine-async-time-and-resources.md",
     "kotlin.md",
-    "spring-r2dbc.md",
-    "interviewPrep.md",
-    "kafka.md",
-    "algorithm-complexity-analysis.md",
-    "images/tree-terminology.png",
-    "images/power-of-2-table.png"
+    "spring-r2dbc.md"
   ]
 }

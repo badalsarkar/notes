@@ -1,0 +1,134 @@
+---
+mindmap-plugin: basic
+---
+
+# graph
+
+## [[images/graph-type.png | types]]
+- Undirected
+- Directed
+- Weighted
+- Self loop
+
+## Tree
+- traits
+   - non-linear?
+   - for hierarchical data
+   - can't contain cycle
+   - node may or may not contain link to parent
+- [[images/tree-terminology.png | tree terminology]]
+   - root
+   - leaf
+      - node with no children
+   - parent
+   - child
+   - edge
+   - height
+   - depth
+- types
+   - binary tree
+      - what?
+         - each node has up to two child
+            - it can have 0, 1 or 2 children
+      - types
+         - binary search tree
+            - what?
+               - all left child <= parent
+               - all right child > parent
+            - tips
+               - normally contains no duplicate
+               - if there is duplicate it can be in either side of a node
+               - clarify this before solving problem
+         - complete binary tree
+            - what?
+               - every level, except last one, is full
+               - must be filled from left to right
+               - has $O(\log n)$ height
+            - type
+               - Max heap
+                  - elements are in descending order
+                  - each node > children
+                  - root is the maximum element
+                  - operations
+                     - insert
+                        - $O(\log n)$
+                     - extract_max
+                        - $O(\log n)$
+               - Min heap
+                  - elements are in ascending order
+                  - each node is < children
+                  - root is the minimum element
+                  - operations
+                     - insert/ add
+                        -
+                           -
+                              - 1. insert element at the right most position
+                           -
+                              - to maintain completeness
+                        -
+                           - 2. swap with parent until it goes to the correct position
+                        - $O(\log n)$ , where $n$ = no. of nodes in the tree
+                     - extract_min/ poll
+                        - extract the root and re-organize the tree
+                        -
+                           -
+                              - 1. swap root with lowermost rightmost element
+                           -
+                              - this preserves the complete binary tree property
+                        -
+                           - 2. compare and swap root with one of its children
+                        -
+                           - 3. do this until min heap property is restored
+                        - $O(\log n)$
+         - full binary tree
+            - what?
+               - a node has either 0 or 2 child
+         - perfect binary tree
+            - what?
+               - it both complete binary tree and full binary tree
+      - traversal
+         - Pre-order
+            - current node -> left branch -> right branch
+         - In-order
+            - left branch -> current node -> right branch
+         - Post-order
+            - left branch -> right branch -> current node
+      - search
+         - DFS
+            - visits the neighbor before visiting the children
+            - use a queue
+               - add the children of current to the queue
+               - dequeue an item to visit it
+            - this is called level order traversal
+         - BFS
+            - finish a branch before moving to next branch
+            - implemented using pre-order, in-order and post-order traversal
+   - balanced tree
+      - traits
+         - guarantee $O(\log n)$ insertion and find
+         - doesn't mean they are totally balanced
+         - when the difference of the height of left sub-tree
+             and right sub-tree is no more than 1
+      - types
+         - red-black tree
+         - AVL tree
+
+## implementation
+- commonly represented by
+   - adjacency matrix
+   - adjacency list
+      - can be represented by Array, Hashmap, LinkedList
+         - Sub title
+
+## what
+- represents collection of nodes connected with edge
+- it can contain cycle
+- terminology
+   - vertex
+      - represents information
+   - edge
+      - connection between nodes
+         - unidirectional
+            - AKA directed graph
+         - bi-directional
+            - AKA undirected graph

@@ -22,6 +22,13 @@
          - temp table
          - [unlogged table](https://www.compose.com/articles/faster-performance-with-unlogged-tables-in-postgresql/)
             - faster
+      - view
+         - materialized view
+            - combination view and table
+            - use the rule system same as view
+            - store data as table
+            - queries are stored same as view query
+            - data is updated by refreshing the view
 - framework
    - spring
       - spring-webflux
