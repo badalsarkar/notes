@@ -7,8 +7,12 @@
         "id": "8f8c7c640c9565cc",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "opensource-spring-vulnerability-analysis.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -73,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "opensource-spring-vulnerability-analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "opensource-spring-vulnerability-analysis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -110,7 +116,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "opensource-spring-vulnerability-analysis.md"
+              }
             }
           }
         ]
@@ -122,6 +130,8 @@
   },
   "active": "8f8c7c640c9565cc",
   "lastOpenFiles": [
+    "oauth-authorization-code-grant.md",
+    "oauth.md",
     "interview-prep-test.md",
     "integration-test.md",
     "graph-tree.md",
@@ -129,8 +139,6 @@
     "psql-commands.md",
     "postgresql.md",
     "job-learning.md",
-    "kotlin-coroutine-async-time-and-resources.md",
-    "kotlin.md",
-    "spring-r2dbc.md"
+    "kotlin-coroutine-async-time-and-resources.md"
   ]
 }
