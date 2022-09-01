@@ -7,11 +7,9 @@
         "id": "8f8c7c640c9565cc",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "mindmapview",
           "state": {
-            "file": "opensource-spring-vulnerability-analysis.md",
-            "mode": "source",
-            "source": false
+            "file": "authentication-authorization.md"
           }
         }
       }
@@ -77,7 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "opensource-spring-vulnerability-analysis.md",
+                "file": "authentication-authorization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +92,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "opensource-spring-vulnerability-analysis.md",
+                "file": "authentication-authorization.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +115,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "opensource-spring-vulnerability-analysis.md"
+                "file": "authentication-authorization.md"
               }
             }
           }
@@ -130,15 +128,15 @@
   },
   "active": "8f8c7c640c9565cc",
   "lastOpenFiles": [
+    "mindmap/functional-programming-in-javascript.png",
+    "mindmap/caching.png",
+    "authentication-authorization.md",
+    "opensource-spring-vulnerability-analysis.md",
     "oauth-authorization-code-grant.md",
     "oauth.md",
     "interview-prep-test.md",
     "integration-test.md",
     "graph-tree.md",
-    "interviewPrep.md",
-    "psql-commands.md",
-    "postgresql.md",
-    "job-learning.md",
-    "kotlin-coroutine-async-time-and-resources.md"
+    "interviewPrep.md"
   ]
 }
