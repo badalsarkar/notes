@@ -47,4 +47,7 @@
   - Relational DB joins are complicated when the data is distributed across large clusters of machines
   - Joins needs to be carefully designed
     - strategies for joins
-      - TODO:
+      - TODO: Read page 190 of the book
+- NoSql
+  - Denormalized data schema, allows avoidance of joins
+  - Its easier to partition and distribute data
