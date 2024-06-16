@@ -32,3 +32,23 @@
       - It means converting physical IT resource to a virtual resource
       - Most IT resources can be virtualized. Virtual server, storage, network, UPS.
       - Virtualization software is used to do Virtualization.
+      - Virtualization software is commonly called hypervisor.
+      - In the Virtualization process, hardware requirements can be simulated by emulation software.
+    - Containerization:
+      - A form of Virtualization technology
+      - Provides virtual environment without the need of virtual machine
+    - Serverless environment
+      - No need to provision a server
+      - It allows deployment of software package that already includes required server Components
+  - Cloud computing terminologies
+    - Cloud doesn't need to be on internet protocol. It can be based on any protocol that allow remote access to IT resources.
+    - Container
+    - On premises
+    - Cloud producer and consumer
+    - Scaling
+      - Horizontal : Scaling out and scaling in
+        - Allocating or releasing of resources of same type.
+        - Common in cloud computing environment
+      - Vertical : Scaling up and scaling down
+        - Replacement of IT resources with higher or lower capacity resources
+        - Less common in cloud computing as it requires downtime
