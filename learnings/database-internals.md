@@ -8,11 +8,13 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
     - by data layout - row oriented vs column oriented
     - by other terms like key-value store, document-oriented database, graph database etc
 - DBMS architecture
-
   - DBMS follow client-server model
-
-  ![Database architecture](../images/database-architecture.png)
-
+    ![Database architecture](../images/database-architecture.png)
+- Memory vs Disk based DBMS
+  - In-memory database primarily store data in memory and use disk for recovery and logging.
+  - Disk based DBMS stores most of the data on disk and use memory for caching disk content or as temporary storage
+  - The data structure, organization and optimization techniques vary between in-memory and disk based DBMS
+  - Programming for main memory is significantly simpler than doing so for disk for which you have to manage data reference, serialization format, freed memory and segmentation manually
 - Data Files
   - AKA primary files
   - Can be implemented as
