@@ -14,7 +14,12 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
   - In-memory database primarily store data in memory and use disk for recovery and logging.
   - Disk based DBMS stores most of the data on disk and use memory for caching disk content or as temporary storage
   - The data structure, organization and optimization techniques vary between in-memory and disk based DBMS
+  - Disk based storage structure often have a short and wide tree
   - Programming for main memory is significantly simpler than doing so for disk for which you have to manage data reference, serialization format, freed memory and segmentation manually
+  - Random memory access is significantly faster in memory
+  - Handling variable size data in disk requires special attention
+  - In memory database uses WAL and disk backup for data persistence.
+    - Data is written to in memory and then to WAL. From WAL data is backed up in disk in batches
 - Data Files
   - AKA primary files
   - Can be implemented as
@@ -41,3 +46,7 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
 - storage structure
   - Buffering
     - whether or not storage structure chooses to collect
+
+## Action Items
+
+TODO: Learn about how the disks work
