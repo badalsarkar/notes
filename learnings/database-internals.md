@@ -11,7 +11,7 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
 
   - DBMS follow client-server model
 
-  ![Database architecture](./images/database-architecture.png)
+  ![Database architecture](../images/database-architecture.png)
 
 - Data Files
   - AKA primary files
