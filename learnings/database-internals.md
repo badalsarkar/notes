@@ -9,6 +9,10 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
     - by other terms like key-value store, document-oriented database, graph database etc
 - DBMS architecture
 
+  - DBMS follow client-server model
+
+  ![Database architecture](./images/database-architecture.png)
+
 - Data Files
   - AKA primary files
   - Can be implemented as
@@ -24,7 +28,7 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
 - Index files
   - an index on primary file is called primary index
   - all other indexes are called secondary
-  - sencondary indexes
+  - secondary indexes
     - TODO need to read again
   - clustered index
     - if the order of data records follows the search key order
@@ -34,4 +38,4 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
     - Example MySQL InnoDB
 - storage structure
   - Buffering
-    - whether or nto storage structure chooses to collect
+    - whether or not storage structure chooses to collect
