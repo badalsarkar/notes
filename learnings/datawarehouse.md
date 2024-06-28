@@ -1,0 +1,27 @@
+# Data Warehouse
+
+- In-memory database
+- Cubes
+  - OLAP Cubes is multi-dimensional dataset.
+  - Data is not stored as table but as array
+  - Main reason to use is fast query performance
+  - Data is pre-calculated (aggregated values)
+  - Good for use case where there is interactive tool, data has hierarchy and we need to slice & dice the data
+  - Uses MDX language, developed by Microsoft
+  - multi-dimensional DBs, for which hardware requirement is also different
+  - Used in data marts
+  - Cubes are less important today as there are alternatives like columnar storage, In-memory database, tabular model etc
+- ODS (operational data storage)
+  - note data warehouse
+  - Used for operational decision making, not for analytical decision making
+  - Long history not needed
+  - Need for real-time data
+  - Data can go from ODS to warehouse
+- ETL (Extract, Transform and Load) process
+  - There are many tools for each task of ETL
+  - Load
+    - Delta load
+      - Incremental loading of data
+- Massive Parallel Processing (MPP)
+  - Shared disk architecture
+  - Shared nothing architecture
