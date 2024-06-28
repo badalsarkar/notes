@@ -1,5 +1,14 @@
 # Data Warehouse
 
+- 3 step data warehousing process
+  - Staging: accumulating data from various sources using the ETL technique and stored in staging area. This is intermediate store.
+  - Data transform/ warehouse: Moving staged data to warehouse. The warehouse maybe dimensional, normalized, data mart or other data store.
+  - Data provisioning: Making the transformed data available for consumption. The consumption can be done by OLAP, another data warehouse, or multi-dimensional database.
+- Types of data warehouse
+  - based on processing type: real-time vs batch
+  - storage format: columnar vs row-based
+  - data structure: relational vs NO-SQL
+  - Deployment options: On-premises vs Cloud
 - In-memory database
 - Cubes
   - OLAP Cubes is multi-dimensional dataset.
@@ -25,3 +34,28 @@
 - Massive Parallel Processing (MPP)
   - Shared disk architecture
   - Shared nothing architecture
+- Consideration for selecting data warehouse
+  - Data format
+    - Is your data structured or unstructured?
+    - Is it relational or non-relational?
+    - What does the warehouse support?
+  - Price
+    - assess your storage and processing needs
+    - prioritize scalability
+    - balance setup cost and long term operational cost
+  - Performance
+    - Assess the volume of data you need to store
+    - The frequency of queries
+    - The response time requirement
+    - Assess how well the data warehouse handles queries of different complexities and data size
+    - Go for warehouse that supports MPP
+- Security
+  - Look for built in support for encryption, authentication, and authorization features
+  - Follows the industry regulations
+  - Supports audit trails and monitoring
+- Processing type
+  - batch processing is good for handling large volume of data at once
+  - real-time processing provides immediate insight
+  - consider the nature of data and the speed at which you need result
+- Integration
+  - How well does it integrate with other tools like BI tools, visualization tools, ingestion tools etc.
