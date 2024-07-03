@@ -59,3 +59,19 @@
   - consider the nature of data and the speed at which you need result
 - Integration
   - How well does it integrate with other tools like BI tools, visualization tools, ingestion tools etc.
+- Types of analysis
+  - Descriptive analysis
+    - Aggregation
+    - Reporting
+    - Data visualization
+  - Diagnostic analysis
+    - Answers questions like "Why did it happen"
+    - Common techniques includes Data mining, Correlation analysis, Statistical analysis
+  - Predictive analysis
+    - Answers questions like "What could happen"
+    - Common techniques are regression analysis, time series analysis, machine learning algorithms
+  - Prescriptive analysis
+    - Answers questions like "What should happen"
+    - Common techniques includes optimization algorithms, simulation modeling, decision trees
+  - Exploratory analysis
+  - Comparative analysis

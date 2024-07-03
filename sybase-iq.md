@@ -7,7 +7,9 @@
 
 ## Summary
 
-- Columnar DB
+- Storage
+  - Columnar DB
+  - Supports in-memory operations through caching technique but the storage is primarily in disk
 - Designed for high performance analytical workload
 - Use advanced compression algo for columnar DB
 - Applies bitwise indexing (?)
@@ -16,10 +18,9 @@
 - Usecases
   - Data warehousing and business intelligence
   - Analytical application that requires complex calculations and aggregation on large datasets
-  - Datamart
+  - Data mart
   - Log analysis
 - It is not optimized for transactional workload that requires updates and inserts. It is optimized for read heavy workload
-- Supports in-memory operations through caching technique but the storage is primarily in disk
 
 ## Data Ingestion
 
