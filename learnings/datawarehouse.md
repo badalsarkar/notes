@@ -75,3 +75,11 @@
     - Common techniques includes optimization algorithms, simulation modeling, decision trees
   - Exploratory analysis
   - Comparative analysis
+- Data access scenario refers to
+  - what queries are made, how often and at what proportion
+  - how much data is read for each query- rows, columns, and bytes
+  - the relationship between reading and updating data
+  - the working size of data and how locally it is used
+  - whether transactions are used and how isolated they are
+  - requirements for data replication and logical integrity
+  - requirements for latency and throughput for each query
