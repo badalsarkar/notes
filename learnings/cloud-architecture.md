@@ -31,5 +31,4 @@
         - Although the message broker's function is not load balancing, it can work for the right use case
         - The communication between publisher and consumer should be one directional and asynchronous. Meaning the publisher doesn't need any response from consumer.
         - This should be used for load balancing internal requests
-      - implementation consideration
-        -
+      - ## implementation consideration
