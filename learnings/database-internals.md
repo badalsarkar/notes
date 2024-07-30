@@ -20,6 +20,20 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
   - Handling variable size data in disk requires special attention
   - In memory database uses WAL and disk backup for data persistence.
     - Data is written to in memory and then to WAL. From WAL data is backed up in disk in batches
+- Column vs Row oriented DBMS
+
+  - Row oriented
+    - Partitions data horizontally
+    - Data persisted on disks are accessed block wise. A minimal data access unit is block.A single block will contain data for all columns
+  - Column oriented
+    - Partitions data vertically
+    - Storing data for different columns in separate file or segment makes it easier to get all values for that column
+    - It may store some metadata e.g. key, with the value to keep the relationship between data of different columns. This causes more storage usage. Some database uses implicit key such as the position of the values.
+    - Some column oriented file formats are Apache Parquet, Apache ORC, RCFile
+    - Column oriented format improves the cache utilization, allows vectorized processing, offers better compression as the data type for each column is same. Different compression methods can be used for different case.
+  - To choose between row and column oriented DB, you need to understand your data access pattern
+    - If read data is consumed in records (most or all of the columns requested) and workload consists of point queries or range scans, row oriented DB will produce better result.
+
 - Data Files
   - AKA primary files
   - Can be implemented as
@@ -50,3 +64,4 @@ _source_: https://learning.oreilly.com/library/view/database-internals/978149204
 ## Action Items
 
 TODO: Learn about how the disks work
+TODO: Learn about Apache Parquet, Apache ORC

@@ -83,3 +83,7 @@
   - whether transactions are used and how isolated they are
   - requirements for data replication and logical integrity
   - requirements for latency and throughput for each query
+- OLAP characteristics
+  - A few users
+  - Large volume of data
+  - Complex queries
