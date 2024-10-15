@@ -1,0 +1,33 @@
+# Designing data intensive applications
+
+- Reliable, Scalable and Maintainable Applications
+  - Reliability
+    - The system is designed to be fault tolerant so that the fault doesn't lead to system failure. It's not possible to make the probability of fault to 0 and thus it is better to be tolerant of fault rather than trying to prevent the faults. It is important to know how to build fault tolerant systems from unreliable parts.
+    - Faults
+      - Hardware faults
+        - Hardware failures are not preventable. But to avoid catastrophe when it happens, we need redundant hardware e.g. back up power, RAID configuration for hard disk.
+        - To build a system that can tolerate the loss of entire system, software fault tolerance techniques should be used. This allows 0 downtime maintenance.
+      - Software errors
+      - Human error
+      - How to make system reliable?
+        - Apply software design that minimizes opportunities for error. Use abstraction
+        - Decouple places where people can make error and places where they can cause failure. Use sandbox environment to try out new things.
+        - Testing
+        - Recovery plan
+        - Monitoring
+  - Scalability
+    - Define the load
+      - The _load Parameter_ varies depending on the application e.g. request per second, read/write per second etc.
+    - Define the current performance
+      - How does the current system perform if load increases and resources remain the same?
+      - If load is increased how much you need to increase the resources to keep performance unchanged?
+      - Latency vs response time
+        - Response time is the total time to get the result. It includes service time (time to process the request), network delays, queueing delays.
+        - Latency is the duration that a request is waiting to be handled- awaiting service
+      - Measure of latency: use percentile
+    - Approaches for coping with load
+      - The architecture of application varies depending on the load and type of application.
+      - Mixing scale up and scale out strategy is useful.
+      - Distributing stateless services is straightforward but not the stateful service.
+      - There is no scalable architecture that is one size fits all. It will depend on the application and the load parameters.
+  - Maintainability
