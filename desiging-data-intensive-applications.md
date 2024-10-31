@@ -31,7 +31,7 @@
     - Mixing scale up and scale out strategy is useful.
     - Distributing stateless services is straightforward but not the stateful service.
     - There is no scalable architecture that is one size fits all. It will depend on the application and the load parameters.
-- \*_Maintainability_
+- **Maintainability**
   - Designing software so that it will minimize pain during maintenance. We should avoid creating legacy software ourselves.
   - Three design principles for improved maintainability
     - Operability
@@ -52,3 +52,5 @@
     - Evolvability
       - Software changes frequently- requirements changes, request for new functionality comes, regulatory requirements changes.
       - Easy to understand software and good abstraction helps making changes to a software. Agile community suggests tools like TDD and refactoring for making rapid changes.
+
+## Data Models and Query Language
