@@ -124,7 +124,23 @@ mindmap-plugin: basic
 
 Read about LDAP [here](./ldap.md)
 
+- High level flow
+  - User provides username and password
+  - Application take those and connect with LDAP server (Active Directory, OpenLDAP) and provide the credential to the server for auth
+  - The LDAP server performs the validation and returns a response
+- Detailed flow
+  - User provides username and password
+  - Application initiates a bind request to connect to the LDAP Server
+    - Anonymous bind
+      - It means connecting to LDAP server without providing user credential
+      - the application search for the DN of the user
+      - Once the DN is found the application sends a bind request using user DN and password
+      - The LDAP server performs auth check and returns response
+      - After authentication LDAP server can also perform authorization check
+
 ## Entra ID
+
+## SSO
 
 ## [[spring-security]] Spring security
 
