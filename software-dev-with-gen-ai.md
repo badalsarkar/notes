@@ -28,3 +28,8 @@ At a high level the flow is like:
 - Find what acceptance criteria is missing. If there is no acceptance criteria, the code may as well be removed
 - Add the acceptance criteria
 - Generate test based on acceptance criteria
+
+## See also
+
+- [ai-dlc.md](ai-dlc.md) — AI-DLC research report: the idea, community feedback, adoption considerations
+- [specification-driven-development.md](specification-driven-development.md)
