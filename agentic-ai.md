@@ -1,7 +1,8 @@
 # Agentic AI and the Move Beyond Vector Search
 
 Research report, August 2026. Related notes: [genai.md](genai.md),
-[genai-architecture.md](genai-architecture.md), [ai-security.md](ai-security.md).
+[genai-architecture.md](genai-architecture.md), [ai-security.md](ai-security.md),
+[sdlc-context-graph.md](sdlc-context-graph.md) — the same methods applied to software delivery.
 
 ## 1. What this report covers
 

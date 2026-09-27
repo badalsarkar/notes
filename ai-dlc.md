@@ -1,9 +1,10 @@
 # AI-DLC (AI-Driven Development Life Cycle)
 
-Research report, August 2026. Related notes:
+Research report, August 2026, revised September 2026. Related notes:
 [specification-driven-development.md](specification-driven-development.md),
 [software-dev-with-gen-ai.md](software-dev-with-gen-ai.md),
-[agentic-ai.md](agentic-ai.md), [ai-security.md](ai-security.md).
+[agentic-ai.md](agentic-ai.md), [sdlc-context-graph.md](sdlc-context-graph.md),
+[ai-security.md](ai-security.md).
 
 ## 1. What this note covers
 
@@ -23,8 +24,8 @@ shared with GitHub Spec Kit, BMAD, Kiro's spec mode and OpenSpec. What is distin
 process layer: named phases, named ceremonies, a replacement for the sprint, and a mandated
 paper trail of every decision.
 
-The strongest part of the method is the front end. Making an agent interrogate a vague business
-intent, in a room with product, engineering and QA present, surfaces ambiguity early. That is a
+**The strongest part of the method is the front end. Making an agent interrogate a vague business
+intent**, in a room with product, engineering and QA present, surfaces ambiguity early. That is a
 genuine benefit and it is mostly a human process improvement rather than an AI one.
 
 The weakest part is the evidence. AWS's headline numbers are vendor claims, one of the most
@@ -34,10 +35,57 @@ synchronous mob ceremonies are expensive, the artifact discipline adds overhead,
 approach front-loads specification in a way that can reintroduce waterfall behaviour if the team
 already leans that way.
 
+As of September 2026 there is still no independent measurement of AI-DLC as a method, and the
+surrounding evidence has moved in both directions. AWS now has one large named adopter outside
+Amazon, DORA has put an explicit price on the review and verification burden that the method
+creates, and METR has weakened the headline result that was the strongest single argument for
+caution. Section 7.3 covers all three. The cost side of the argument is now better characterised
+than the benefit side.
+
 A reasonable position for most organisations is to adopt the artifacts and the approval gates,
 adopt the mob elaboration ritual for genuinely ambiguous work, and ignore the vocabulary.
 
-## 3. Where it came from
+## 3. The problems it claims to solve
+
+The method is presented as a response to six specific complaints about how software is delivered
+today. They are worth separating, because the evidence behind them is uneven and AI-DLC addresses
+some of them much more directly than others.
+
+- **Requirements ambiguity surfaces late.** A vague business intent passes through grooming without
+  anyone forcing its contradictions into the open, and they reappear as rework several weeks later.
+  Mob Elaboration is the direct answer: the agent drafts requirements and clarifying questions, and
+  the people who can answer them do so in one session before any code exists. This is the complaint
+  the method handles best, and the practitioner reports in section 7.1 credit the ceremony rather
+  than the AI for the improvement.
+- **The sprint boundary no longer matches the size of the work.** A two-week cycle is a batching
+  delay if a feature can be specified and built in an afternoon, which is the argument for the bolt.
+  This is the least substantiated item on the list, and section 5.3 notes that nothing in the method
+  depends on the new vocabulary.
+- **Design decisions are not recorded in a form anyone can audit.** Rationale lives in chat
+  transcripts, pull request threads and individual memory, so nobody can later reconstruct why a
+  thing was built the way it was, and there is no record of which parts an AI produced and which a
+  human approved. The mandated artifact directory and timestamped audit file exist for this, and
+  section 8.1 rates that layer as the highest value for the lowest cost.
+- **Human effort goes into authoring rather than deciding.** The core loop assumes that typing is no
+  longer the constraint, so the human's unit of work should be judgement, and the judgement points
+  should be explicit rather than implicit. This is asserted rather than measured, and the DORA and
+  METR results in section 7.3 are reasons to treat it carefully.
+- **Agents drift when the constraints are not written down.** Without steering files each session
+  re-derives the architecture, chooses its own dependencies and reopens settled questions. Writing
+  the approved dependencies, architectural rules and regulatory obligations down is useful whether
+  or not the rest of the method is adopted, as section 9 sets out.
+- **Code is now generated faster than it can be reviewed.** This is the point Wiz makes, covered in
+  section 8.4. It is a real problem, but AI-DLC contributes to it as much as it answers it, which is
+  why review capacity appears as a prerequisite in section 8.2.
+
+The framing behind the list is itself disputed. The argument in section 7.2 is that AI-DLC starts
+from the premise that developers are idle waiting for direction, when product and design have also
+become faster and implementation-ready ideas still are not flowing; on that reading the method
+elaborates an intent well and says nothing about whether the intent was worth building. Of the six
+complaints, the ones this note treats as both real and well addressed are late ambiguity, the
+missing decision record, and agent drift.
+
+## 4. Where it came from
 
 - **31 July 2025** — Raja SP publishes *AI-Driven Development Life Cycle: Reimagining Software
   Engineering* on the AWS DevOps blog. This is the founding description of the method.
@@ -47,19 +95,38 @@ adopt the mob elaboration ritual for genuinely ambiguous work, and ignore the vo
 - **29 November 2025** — AWS open-sources the workflows as agent steering rules under MIT-0:
   [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows). The announcement post is
   [Open sourcing adaptive workflows for AI-DLC](https://aws.amazon.com/blogs/devops/open-sourcing-adaptive-workflows-for-ai-driven-development-life-cycle-ai-dlc/).
-  As of August 2026 the repository is around 4.2k stars and actively maintained.
 - **2026** — the term escapes AWS. IBM publishes an explainer, Wiz publishes an AppSec view,
   consultancies publish adoption offerings, and a broad "AI-native SDLC" literature grows around
-  it. Much of what is now labelled AI-DLC in blog posts is generic spec-driven development.
+  it. Much of what is now labelled AI-DLC in blog posts is generic spec-driven development, and
+  at least one unrelated third-party methodology has been published under the same name with a
+  different phase structure of elaboration, execution, operation and reflection. When reading
+  anything called AI-DLC it is worth checking whether it describes the AWS method at all.
+- **June 2026** — Southwest Airlines and AWS announce a modernisation partnership in which
+  Southwest states that it is adopting AI-DLC, with more than 2,700 developers using Kiro to
+  rebuild Southwest.com and a target of a fully cloud-based environment by 2028.
+  [press.aboutamazon.com](https://press.aboutamazon.com/aws/2026/6/southwest-airlines-partners-with-amazon-web-services-aws-to-accelerate-ai-capabilities-and-technology-modernization)
+  This is the first named adopter outside Amazon, and it is an AWS press release reporting scale
+  rather than an independent account reporting outcomes.
+- **September 2026** — the open-sourced workflows have reached version 2.9.0 and around 4.7k
+  stars. Version 2 is considerably larger than what the founding post describes: 14 agents,
+  made up of 11 domain experts, two reviewers and an adaptive composer, running across five
+  phases and 33 stages, with a "Classic" mode that preserves the 18-stage version 1 flow at one
+  approval per stage. It runs on Claude Code, Kiro CLI, Kiro IDE, Codex CLI, Cursor, opencode and
+  GitHub Copilot, there is an MCP server for it, and the published roadmap adds first-class
+  DevOps and Security agent integrations so that deployment, observability and security review
+  also run as governed stages.
 
-Two things follow from the timeline. First, the method is roughly a year old in its published
+Three things follow from the timeline. First, the method is roughly a year old in its published
 form, so nobody has multi-year data on it. Second, the early criticism about AWS tool lock-in is
 now out of date: the open-sourced rules ship with instructions for Kiro, Amazon Q Developer,
-Cursor, Cline, Claude Code, GitHub Copilot, OpenAI Codex and a generic agent profile.
+Cursor, Cline, Claude Code, GitHub Copilot, OpenAI Codex and a generic agent profile. Third, the
+implementation is growing rather than simplifying, which sharpens the overhead objection in
+section 7.2 — a team evaluating AI-DLC today is looking at a larger surface than most published
+write-ups describe.
 
-## 4. The idea
+## 5. The idea
 
-### 4.1 The core loop
+### 5.1 The core loop
 
 Every activity in AI-DLC follows the same four-step cycle: the human states intent, the AI
 produces a plan and asks clarifying questions, the human resolves the ambiguity and approves,
@@ -67,7 +134,7 @@ the AI executes and the human verifies the result. The claim is not that AI writ
 The claim is that the unit of human work moves from authoring to deciding, and that the decision
 points are made explicit and recorded.
 
-### 4.2 The three phases
+### 5.2 The three phases
 
 - **Inception.** The AI turns a business intent into requirements, user stories and units of
   work. Scope is validated, assumptions are written down, and the application architecture is
@@ -80,9 +147,11 @@ points are made explicit and recorded.
 The open-sourced workflows add an adaptive element: the agent is instructed to run only the
 stages a change actually warrants, so a one-line fix does not have to pass through full
 architectural elaboration. AWS positions this as the fix for the rigidity of first-generation
-spec-driven tooling.
+spec-driven tooling. In version 2 the selection is made by a dedicated adaptive composer that
+assembles a route through the 33 available stages. The adaptivity is real, but the amount a team
+has to understand in order to predict what the agent will do has grown rather than shrunk.
 
-### 4.3 The vocabulary
+### 5.3 The vocabulary
 
 - **Bolt** replaces the sprint. A bolt is a work cycle measured in hours or days rather than two
   weeks, on the argument that a two-week boundary is meaningless when a feature can be specified
@@ -99,7 +168,7 @@ spec-driven tooling.
 The vocabulary is the part most likely to generate internal resistance and is the part with the
 least substance behind it. Nothing in the method breaks if a team keeps saying "sprint".
 
-### 4.4 The artifacts
+### 5.4 The artifacts
 
 The workflows write their output to a documentation directory in the repository, including an
 audit file that records each interaction, approval and decision with its raw input and a
@@ -110,27 +179,78 @@ directly, presenting end-to-end traceability from business intent to production 
 answer to audit and regulatory review, with organisational policy encoded in steering files
 (approved dependencies, security standards, architectural rules, regulatory obligations).
 
-## 5. How it compares to the alternatives
+## 6. How it compares to the alternatives
+
+### 6.1 The spec-driven landscape
 
 All of these share the same underlying idea: a written specification, not the chat history, is
-the source of truth. They differ in how much process they impose around it.
+the source of truth. They differ in how much process they impose around it, and in how much of
+the code they expect to stay hand-maintained.
 
-| | AI-DLC | GitHub Spec Kit | BMAD-METHOD | Kiro specs | Ad-hoc agent rules |
-|---|---|---|---|---|---|
-| **Shape** | Methodology plus steering rules | CLI toolkit | Multi-agent framework | IDE feature | Whatever you write |
-| **Prescribes team process** | Yes: phases, mob ceremonies, bolts | No | Simulates agile roles as agents | No | No |
-| **Audit trail** | Explicit, mandated | Spec and plan files only | Agent artifacts | Spec files | None by default |
-| **Agent portability** | Broad since Nov 2025 | Very broad | Broad | Kiro only | By construction |
-| **Overhead** | Highest | Moderate | High | Low | Lowest |
-| **Best fit** | Regulated delivery, multi-stakeholder work | General feature work | Large greenfield builds | Individual and small-team work | Small changes, spikes |
-| **Main weakness** | Ceremony and documentation cost; unproven | No governance story | Complexity; agent sprawl | Tied to one IDE | Nothing is reproducible |
+| | AI-DLC | GitHub Spec Kit | BMAD-METHOD | Kiro specs | Google Antigravity | GitHub Agent HQ | Tessl | Ad-hoc agent rules |
+|---|---|---|---|---|---|---|---|---|
+| **Shape** | Methodology plus steering rules | CLI toolkit | Multi-agent framework | IDE feature | Agent-first platform | Multi-agent control plane | Spec-as-source platform | Whatever you write |
+| **Prescribes team process** | Yes: phases, mob ceremonies, bolts | No | Simulates agile roles as agents | No | No | No | No | No |
+| **Audit trail** | Explicit, mandated | Spec and plan files only | Agent artifacts | Spec files | Model decides per task | Agent activity, centrally visible | The spec is the record | None by default |
+| **Agent portability** | Broad since Nov 2025 | Very broad | Broad | Kiro only | Antigravity only | GitHub and Copilot only | Tessl only | By construction |
+| **Overhead** | Highest | Moderate | High | Low | Low | Low per developer, platform setup up front | Unclear, still early | Lowest |
+| **Best fit** | Regulated delivery, multi-stakeholder work | General feature work | Large greenfield builds | Individual and small-team work | Work where the plan should vary by task | Running many agents across many teams | Greenfield work willing to stop editing code | Small changes, spikes |
+| **Main weakness** | Ceremony and documentation cost; unproven | No governance story | Complexity; agent sprawl | Tied to one IDE | Tied to one platform; no process guidance | Governs agents, not requirements | Largely a thesis so far | Nothing is reproducible |
+
+The three entrants added since the first version of this note are worth describing separately,
+because two of them answer the same problems as AI-DLC without proposing a methodology.
+
+- **Google Antigravity** is an agent-first development platform with spec-driven development
+  built in, and its design choice is the opposite of a mandated template: the model decides
+  whether a given change needs a written artifact at all, and writes a plan specific to the task
+  rather than filling in a standard form. Durable constraints live in a "project constitution" of
+  non-negotiable principles plus reusable skills, which is the same role AI-DLC's steering files
+  play. Google publishes spec-driven development codelabs for it, including one that drives
+  Antigravity with GitHub Spec Kit.
+  [medium.com](https://medium.com/google-cloud/benefits-and-challenges-of-spec-driven-development-and-how-antigravity-is-changing-the-game-3343a6942330)
+- **GitHub Agent HQ** and the Copilot app are a control plane for running several agents at once,
+  presented as making agent work visible, auditable and steerable. Microsoft also publishes
+  [microsoft/agentic-sdlc-starter](https://github.com/microsoft/agentic-sdlc-starter), a reference
+  architecture for spec-driven AI-assisted development on Copilot, MCP and repository-based
+  context engineering. Together these compete directly with AI-DLC's audit-trail pitch, but solve
+  it at the platform layer instead of the process layer. For most organisations that is the more
+  likely route to a usable record, because it does not require anyone to adopt a methodology.
+- **Tessl**, founded by Guy Podjarny of Snyk and funded to $125m, takes the idea furthest with
+  "spec-as-source": the specification is the artifact you maintain and code becomes a regenerable
+  output, so you edit intent rather than code. As of mid-2026 this is mostly still a thesis, and
+  it is the clearest statement of where the whole category is pointed.
+- **OpenSpec** is the useful structural contrast rather than a competitor. It works in spec
+  *deltas* instead of a complete specification written up front, which suits existing systems and
+  is a direct answer to the front-loading problem raised in section 7.2.
+  [thoughtworks.com](https://www.thoughtworks.com/en-us/radar/tools/openspec)
 
 The practical reading is that AI-DLC buys accountability and pays for it in velocity, which is
 the trade a regulated environment usually wants to make and a prototyping team usually does not.
+What has changed is that the accountability is no longer only available as a methodology.
 
-## 6. What the community says
+### 6.2 How the market now frames the category
 
-### 6.1 The supportive case
+- Forrester named agentic software development in its
+  [Top 10 Emerging Technologies for 2026](https://www.forrester.com/press-newsroom/forresters-top-10-emerging-technologies-for-2026/)
+  and classed it as medium-term, meaning two to five years before it delivers its full benefit.
+  That is a reasonable expectation to set internally against vendor timelines.
+- Forrester also launched an
+  [Agentic Development Platforms Vendor Landscape](https://www.forrester.com/blogs/launching-the-agentic-development-platforms-vendor-landscape-q3-2026/)
+  in Q3 2026 covering 25 vendors, and reports that differentiation has shifted away from code
+  generation towards orchestration, enterprise governance, model flexibility and cost
+  transparency. Those are the things AI-DLC was pitched on, so the method's distinguishing
+  features are becoming table stakes in a product category rather than a reason to adopt a
+  process.
+- The emerging umbrella term for this work is **harness engineering**: the infrastructure,
+  constraints and feedback loops built around coding agents to make them reliable. Thoughtworks
+  describes spec-driven development as one feedforward control within it, paired with feedback
+  controls such as mutation testing. This is a more useful frame than "methodology", because it
+  separates the parts that constrain the agent in advance from the parts that catch it afterwards,
+  and AI-DLC is almost entirely the former.
+
+## 7. What the community says
+
+### 7.1 The supportive case
 
 The recurring positive comment is about Mob Elaboration rather than about AI. An agent that
 interrogates a vague intent in front of the whole team surfaces the ambiguities that otherwise
@@ -144,7 +264,7 @@ business analyst leading Inception, an architect or senior engineer leading Cons
 present throughout. Decisions are written into the repository so that later sessions and later
 agents do not diverge from them.
 
-### 6.2 The critical case
+### 7.2 The critical case
 
 - **It may be solving the wrong bottleneck.** The argument, made most directly in
   [AI-DLC solves the wrong bottleneck](https://wakamoleguy.com/p/ai-dlc-solves-wrong-bottleneck),
@@ -170,8 +290,18 @@ agents do not diverge from them.
 - **It discards practices that solved real problems.** Several critics object to the "start from
   scratch" framing, on the grounds that Scrum, Kanban and Lean addressed coordination problems
   that AI does not remove.
+- **The artifacts may not be reviewable in practice.** Thoughtworks placed spec-driven development
+  in the "assess" ring of
+  [Technology Radar volume 34](https://www.thoughtworks.com/about-us/news/2026/combat-ai-cognitive-debt-radar-v34)
+  in April 2026 with three reservations: generated specification files are often long enough to be
+  hard to review, it is unclear who the audience is for a generated PRD or user story, and the
+  "bitter lesson" may apply, meaning that handcrafting detailed rules for a model does not scale
+  as models improve. The volume's overall theme is cognitive debt, the widening gap between the
+  systems a team owns and what the people on it actually understand. This is the most direct
+  challenge to the layer that section 8.1 rates highest, because a specification that is too
+  long to be read provides no more assurance than an approval granted without review.
 
-### 6.3 What the evidence actually shows
+### 7.3 What the evidence actually shows
 
 AWS's headline figures are vendor claims and should be read as such.
 
@@ -186,26 +316,64 @@ AWS's headline figures are vendor claims and should be read as such.
   developers delivering fifteen features per sprint to one product owner and three developers
   delivering thirty-five, with nine contractor positions removed. There is no independent
   confirmation and no definition of "feature".
+- The Southwest Airlines adoption announced in June 2026 reports scale rather than outcomes: more
+  than 2,700 developers using Kiro, and a 2028 target. Amazon's own internal figures are of the
+  same kind. The Agent Z programme in Amazon Stores reports more than 21,000 agents created since
+  July 2025, including a delivery address optimisation agent credited with 20,500 hours saved and
+  a 74.4% reduction in first-delivery defects. None of these numbers is attributable to AI-DLC as
+  a method, and they are useful mainly as evidence that the approach is being used at size.
 
-The independent research is more sober and does not measure AI-DLC specifically.
+The independent research is more sober, does not measure AI-DLC specifically, and became less
+certain rather than more during 2026.
 
+- DORA's [ROI of AI-assisted Software Development](https://dora.dev/ai/roi/report/), published in
+  April 2026, is the most directly relevant of these. It models adoption as a J-curve in which
+  productivity falls before it rises, and attributes the dip to three causes: the learning curve
+  as teams change how they work, the **verification tax** of checking whether generated code is
+  correct, secure and consistent with the architecture, and downstream processes such as testing
+  and approval that were never sized for the new volume of change. Its illustrative model for a
+  500-person engineering organisation gives roughly 39% first-year return and about an
+  eight-month payback, on $11.6m of gross value against $8.4m of investment, and the authors
+  state plainly that these are high-uncertainty estimates meant to start a conversation rather
+  than a formula. The same model prices an instability tax, where a change failure rate moving
+  from 5% to 6% costs around $344,000. Its conclusion restates the 2025 one: the returns come
+  from the quality of the internal platform, the clarity of workflows and the alignment of teams
+  rather than from the tools.
 - The [2025 DORA report](https://dora.dev/dora-report-2025/), based on nearly 5,000 respondents,
   found that AI adoption raises throughput and raises instability at the same time, and that AI
   amplifies whatever a team already is. Strong teams get stronger, weak teams get worse faster.
-  Its central recommendation is that the returns come from platform quality, workflow clarity and
-  team alignment rather than from the tools.
-- METR's [randomized trial](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
-  of 16 experienced open-source developers across 246 tasks found them 19% slower with AI tools,
-  while they believed they had been 20% faster. The tooling has moved on since early 2025, but
-  the perception gap is the durable finding, and it is the reason self-reported productivity
-  gains from an AI-DLC pilot should not be trusted on their own.
+- METR has weakened its own headline result. The
+  [original trial](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) of 16
+  experienced open-source developers across 246 tasks found them 19% slower with AI tools while
+  they believed they had been 20% faster. A larger
+  [follow-up published in February 2026](https://metr.org/blog/2026-02-24-uplift-update/), covering
+  57 developers, 143 repositories and more than 800 tasks with late-2025 tooling, estimated 18%
+  slower for the ten developers who had also taken part in the first study, on a confidence
+  interval running from 38% slower to 9% faster, and 4% slower for the 47 new recruits, on an
+  interval from 15% slower to 9% faster. METR's own assessment is that this is an unreliable
+  signal, because developers who did not want to work without AI declined to take part and
+  between 30% and 50% of participants withheld tasks they did not want to attempt unaided, so the
+  organisation is redesigning the experiment. Two things follow. The 19% figure should no longer
+  be quoted as a current effect, and the durable finding is the gap between measured and perceived
+  speed, which remains the reason not to trust self-reported gains from an AI-DLC pilot.
+- Scrum.org's [AI4Agile Practitioners Report 2026](https://www.scrum.org/resources/blog/ai4agile-practitioners-report-2026)
+  surveys where practitioners think AI fits. Integration uncertainty is the dominant reported
+  challenge at 54.3%, eighteen points ahead of the next item, and the most common concerns are
+  the erosion of agile values, the loss of human-centred collaboration and reduced critical
+  thinking. Both halves matter here: the first explains why a prescriptive method like AI-DLC is
+  attractive, since it answers the integration question directly, and the second describes the
+  resistance it will meet, since the practices people are worried about losing are the ones it
+  proposes to replace.
 
-The honest summary is that there is no published independent measurement of AI-DLC as a method.
-Anyone adopting it is running an experiment, and should instrument it accordingly.
+The honest summary is that there is still no published independent measurement of AI-DLC as a
+method. Anyone adopting it is running an experiment, and should instrument it accordingly. What
+the 2026 research adds is a better account of the costs than of the benefits: the verification
+tax and the instability tax are now described and roughly priced, while the productivity upside
+rests on vendor claims and on a research result whose own authors no longer stand behind it.
 
-## 7. Considerations for adopting it in an organisation
+## 8. Considerations for adopting it in an organisation
 
-### 7.1 Decide what you are actually adopting
+### 8.1 Decide what you are actually adopting
 
 The method separates cleanly into three layers, and they have very different cost and value:
 
@@ -219,9 +387,14 @@ The method separates cleanly into three layers, and they have very different cos
    Adopt last, if at all.
 
 Most of the reported benefit sits in layers 1 and 2. Treating the whole thing as one indivisible
-package is the main way adoptions fail.
+package is the main way adoptions fail. The separation matters more now that the published
+implementation has grown: the 33-stage version 2 described in section 4 is a larger commitment
+than most write-ups suggest, and a team that wants only layer 1 can take the artifact formats and
+the approval gates without the stage machinery. The Thoughtworks reservation in section 7.2 is
+the counter-argument to rating layer 1 so highly, and it is worth taking seriously: the benefit
+depends on the artifacts being short enough that reviewers read them, not on their existence.
 
-### 7.2 Prerequisites
+### 8.2 Prerequisites
 
 - **The intent has to have an owner who can answer questions.** Mob Elaboration produces a list
   of clarifying questions. If the business owner is unavailable for two weeks, the method stalls
@@ -236,9 +409,12 @@ package is the main way adoptions fail.
   tests. If the existing suite is thin, AI-DLC accelerates the production of confidently wrong
   code.
 - **Review capacity.** The constraint moves from writing code to reviewing it. A team that
-  already has a pull request backlog will not benefit from generating more code faster.
+  already has a pull request backlog will not benefit from generating more code faster. DORA's
+  verification tax and instability tax, in section 7.3, are the closest thing available to a price
+  for this, and both fall on the review and testing side rather than on authoring, which is the
+  side AI-DLC accelerates.
 
-### 7.3 Governance, audit and regulation
+### 8.3 Governance, audit and regulation
 
 This is where the method has the most to offer a regulated firm, and where it needs the most
 care.
@@ -258,7 +434,7 @@ care.
 - Human accountability does not transfer. Whoever approves the plan owns the outcome, and that
   should be explicit in the process definition.
 
-### 7.4 Security
+### 8.4 Security
 
 Wiz's [AppSec analysis](https://www.wiz.io/academy/ai-security/ai-driven-development-lifecycle-ai-dlc)
 makes the central point that code is now generated faster than any human can review it, which
@@ -275,7 +451,7 @@ picture. The specific items to plan for:
 - Agents operating in pipelines need least-privilege credentials of their own, and their actions
   need to be attributable.
 
-### 7.5 Team and organisational design
+### 8.5 Team and organisational design
 
 - Small cross-functional teams of four to six with a clear decision-maker per phase. Larger mobs
   degrade quickly.
@@ -289,20 +465,23 @@ picture. The specific items to plan for:
 - Keep the customer feedback loop shorter than the build loop. This is the single most important
   guard against the mini-waterfall failure mode.
 
-### 7.6 How to pilot it
+### 8.6 How to pilot it
 
 - Pick one team and two or three genuinely ambiguous pieces of work. Ambiguity is what the method
   is for; a well-understood change will show nothing.
 - Run a control. Comparable work by a comparable team using your current process, over the same
   period. Without this you will be measuring enthusiasm.
 - Measure delivery outcomes rather than perceptions: lead time to production, change failure
-  rate, time to restore, defect escape rate, and review effort per change. The METR result is the
-  reason to distrust self-reported speed.
+  rate, time to restore, defect escape rate, and review effort per change. The METR results are
+  the reason to distrust self-reported speed.
+- Expect the first months to look worse than the baseline. DORA's J-curve predicts a dip before
+  any gain, so a pilot measured only at the midpoint will report a failure it would have recovered
+  from, and a decision date set too early will throw away a method that was working.
 - Track the costs the advocates leave out: hours spent in mob ceremonies, token and tool spend,
   and time spent maintaining steering files and specs.
 - Set a decision date and pre-commit to what would count as failure.
 
-### 7.7 Where it fits and where it does not
+### 8.7 Where it fits and where it does not
 
 **It fits** work that is ambiguous at the start, has multiple stakeholders who must agree, and
 must be defensible afterwards. Examples from a capital markets context: rebuilding a settlement
@@ -318,7 +497,7 @@ whose behaviour nobody can currently specify. It also does not fit an organisati
 reliably get its business stakeholders into a room, because the elaboration ceremony is the whole
 mechanism and there is no asynchronous fallback in the method as published.
 
-### 7.8 The main failure modes to watch for
+### 8.8 The main failure modes to watch for
 
 - Approval theatre: humans clicking through gates without reading, which produces a complete audit
   trail of unexamined decisions and is worse than no trail at all.
@@ -330,7 +509,7 @@ mechanism and there is no asynchronous fallback in the method as published.
 - Adopting the vocabulary and nothing else, which is the most common way a methodology gets
   discredited internally.
 
-## 8. Practical starting point
+## 9. Practical starting point
 
 If the goal is to get most of the value quickly without committing the organisation to a
 methodology, a defensible sequence is:
@@ -346,7 +525,43 @@ methodology, a defensible sequence is:
 
 The AWS rules in [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) are MIT-0
 and can be read as a reference implementation and adapted, which is a cheaper path than adopting
-them wholesale.
+them wholesale. Reading version 2 for its stage definitions and then implementing a much smaller
+subset is more defensible than installing 33 stages and hoping the adaptive composer picks well.
+
+Two constraints apply to steps 1 and 2. Set a length at which a specification has to be split
+rather than accepting whatever the agent produces, since the Thoughtworks objection in section
+7.2 is that these files grow past the point where reviewers read them in full. Also check whether
+the platform you already run gives you the record you need: if the organisation is standardising on
+GitHub Agent HQ or a similar control plane, much of the audit story in section 5.4 arrives
+without a methodology attached.
+
+## 10. The context layer the method does not have
+
+AI-DLC's context layer is markdown files in a repository directory. That is what makes it
+portable across seven agent harnesses, and it is also its main structural limitation. Most
+organisations running agents at scale have built a graph instead, and
+[sdlc-context-graph.md](sdlc-context-graph.md) covers that in full. Four points bear directly on
+this note:
+
+- **The steering files are an ontology with no schema.** Section 8.2 treats a codified definition
+  of "correct" as a prerequisite, and that is exactly what a business ontology is. Written as
+  prose it cannot be queried, cannot be checked against the code, and drifts without anything
+  detecting the drift. AWS itself now ships an open-source accelerator that drafts such an
+  ontology from an organisation's data for expert review and stores it in a knowledge graph, but
+  the AI-DLC workflows do not reference it.
+- **The audit questions are relationship queries.** The questions internal audit asks in section 8.3 are
+  relationship queries: which requirement produced this code, who approved it, was it generated
+  or written, and what else did that decision touch. AWS's own AIDLC Collaborative sample
+  acknowledges this by holding requirements, stories, designs, decisions and code as typed linked
+  items with a traceability graph view.
+- **The competition is solving this at the platform layer.** Atlassian's Teamwork Graph, opened
+  in May 2026, gives coding agents governed multi-repository context and an audit surface built
+  on work items that already exist, so it inherits freshness rather than requiring maintenance.
+  That is the same benefit section 5.4 claims, without adopting a methodology.
+- **The gain is efficiency rather than correctness.** Published results for code graphs show large
+  reductions in tokens, tool calls and latency and only single-digit improvements in task
+  resolution. That is worth having against the cost concerns in section 7.3, but it does nothing
+  about the review bottleneck, which remains the binding constraint.
 
 ## My notes
 
@@ -370,7 +585,8 @@ them wholesale.
 
 - [AI-Driven Development Life Cycle: Reimagining Software Engineering](https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/) — AWS, July 2025, the founding post.
 - [Open sourcing adaptive workflows for AI-DLC](https://aws.amazon.com/blogs/devops/open-sourcing-adaptive-workflows-for-ai-driven-development-life-cycle-ai-dlc/) — AWS, November 2025.
-- [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) — the steering rules, MIT-0.
+- [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) — the steering rules, MIT-0, version 2.9.0 as of September 2026.
+- [Southwest Airlines partners with AWS](https://press.aboutamazon.com/aws/2026/6/southwest-airlines-partners-with-amazon-web-services-aws-to-accelerate-ai-capabilities-and-technology-modernization) — June 2026, the first named adopter outside Amazon.
 - [Building with AI-DLC using Amazon Q Developer](https://aws.amazon.com/blogs/devops/building-with-ai-dlc-using-amazon-q-developer) — AWS walkthrough.
 - [AI-Driven Development Lifecycle for Financial Services](https://aws.amazon.com/blogs/industries/ai-driven-development-lifecycle-for-financial-services/) — AWS, the regulated-industry framing and the vendor metrics.
 - [AI-DLC: The AI-Driven Development Lifecycle](https://www.ibm.com/think/topics/ai-dlc) — IBM's neutral explainer.
@@ -381,5 +597,15 @@ them wholesale.
 - [AI-DLC Explained: How AWS Labs Brings Structure to AI Coding](https://eleks.com/blog/aws-ai-dlc-explained/) — practitioner review, including the overhead objections.
 - [The Essence of AI-DLC is Extreme Decision Making through Mob Work](https://zenn.dev/kiakiraki/articles/437ba4d9441b2b?locale=en) — argues the method is a human process design, not an AI one.
 - [DORA State of AI-assisted Software Development 2025](https://dora.dev/dora-report-2025/) — throughput up, instability up, AI as amplifier.
+- [DORA ROI of AI-assisted Software Development](https://dora.dev/ai/roi/report/) — April 2026, the J-curve, the verification tax and the instability tax. [InfoQ summary](https://www.infoq.com/news/2026/05/dora-roi-ai-assisted-dev-report/).
 - [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) — METR, the 19% slower / felt 20% faster result.
+- [We are Changing our Developer Productivity Experiment Design](https://metr.org/blog/2026-02-24-uplift-update/) — METR, February 2026, the wider intervals and why they no longer trust the signal.
+- [Technology Radar volume 34](https://www.thoughtworks.com/about-us/news/2026/combat-ai-cognitive-debt-radar-v34) — Thoughtworks, April 2026, cognitive debt and harness engineering. The [spec-driven development entry](https://www.thoughtworks.com/en-us/radar/techniques/spec-driven-development) carries the reservations.
+- [Forrester's Top 10 Emerging Technologies for 2026](https://www.forrester.com/press-newsroom/forresters-top-10-emerging-technologies-for-2026/) — agentic software development as a medium-term technology, and the [Agentic Development Platforms Vendor Landscape, Q3 2026](https://www.forrester.com/blogs/launching-the-agentic-development-platforms-vendor-landscape-q3-2026/).
+- [AI4Agile Practitioners Report 2026](https://www.scrum.org/resources/blog/ai4agile-practitioners-report-2026) — Scrum.org, integration uncertainty and what practitioners fear losing.
 - [github/spec-kit](https://github.com/github/spec-kit) — the main alternative, no process layer.
+- [microsoft/agentic-sdlc-starter](https://github.com/microsoft/agentic-sdlc-starter) — Microsoft's reference architecture for spec-driven work on Copilot and MCP.
+- [How Google Antigravity is changing spec-driven development](https://medium.com/google-cloud/benefits-and-challenges-of-spec-driven-development-and-how-antigravity-is-changing-the-game-3343a6942330) — the project constitution and model-decided artifacts. Google also publishes a [spec-driven development codelab](https://codelabs.developers.google.com/sdd-agy-cli).
+- [OpenSpec](https://www.thoughtworks.com/en-us/radar/tools/openspec) — spec deltas rather than a full upfront specification, better suited to existing systems.
+- [Tessl raises $125M to build AI Native Development](https://tessl.io/podcast/tessl-raises-125m-to-build-ai-native-development) — the spec-as-source position.
+- [Infosys SDLC Agent Framework](https://www.infosys.com/iki/techcompass/sdlc-agent-framework.html) and [Capgemini on agentic SDLC](https://www.capgemini.com/ch-en/insights/expert-perspectives/agentic-ai-a-powerful-new-partner-for-your-software-engineering-teams/) — the consultancy offerings, useful for vocabulary rather than evidence.
