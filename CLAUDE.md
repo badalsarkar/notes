@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A personal technical **knowledge base**, not a software project. ~95 topic-per-file Markdown notes at
+A personal technical **knowledge base**, not a software project. ~100 topic-per-file Markdown notes at
 the repo root (e.g. `spring-security.md`, `kafka.md`, `ai-security.md`), plus generated diagram assets.
 There is no build, lint, test, or dependency tooling — do not look for or invent any. "Working in this
 repo" means reading, writing, and cross-linking Markdown.
@@ -23,7 +23,10 @@ repo" means reading, writing, and cross-linking Markdown.
   they support.
 - **Cross-link related notes** with relative Markdown links, e.g. `[oauth.md](oauth.md)`.
 - **`## Resources`** section at the end of a note collects books/courses/links for the topic.
-- Some notes carry YAML frontmatter `mindmap-plugin: basic` (12 of them) — this marks the file for
+- **Table of contents for large notes.** A note longer than about 150 lines or with more than five
+  sections gets a `## Contents` list of anchor links right after the title (see `ai-security.md`).
+  Keep it in sync when adding, renaming, or removing headings.
+- Some notes carry YAML frontmatter `mindmap-plugin: basic` (13 of them) — this marks the file for
   rendering by the Obsidian Mind Map plugin. Preserve it; the outline structure IS the mind map.
 
 ## Diagram workflow (mindmap/ and plantuml/)
@@ -45,3 +48,8 @@ requires PlantUML (Graphviz), which is not configured in-repo.
 
 Commits are single notes or small edits; history uses short messages like "added note" / "notes added".
 Keep commits scoped to the note(s) touched. Commit only when the user asks.
+
+The repo root also contains untracked, non-note files: shell and git dotfiles (`.bashrc`, `.zshrc`,
+`.gitconfig`, `.profile`, …), `.mcp.json`, `.gitmodules`, and editor folders (`.idea/`, `.vscode`).
+They are not part of the knowledge base and must not be committed, so stage notes by explicit path
+and never use `git add -A` or `git add .`.
