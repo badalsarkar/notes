@@ -4,7 +4,7 @@ Research report, August 2026, revised September 2026. Related notes:
 [specification-driven-development.md](specification-driven-development.md),
 [software-dev-with-gen-ai.md](software-dev-with-gen-ai.md),
 [agentic-ai.md](agentic-ai.md), [sdlc-context-graph.md](sdlc-context-graph.md),
-[ai-security.md](ai-security.md).
+[ai-security.md](ai-security.md), [aidlc-context-management.md](aidlc-context-management.md).
 
 ## 1. What this note covers
 
