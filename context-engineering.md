@@ -2,7 +2,8 @@
 
 Research report, October 2026. Related notes: [agentic-ai.md](agentic-ai.md),
 [sdlc-context-graph.md](sdlc-context-graph.md), [genai-architecture.md](genai-architecture.md),
-[ai-security.md](ai-security.md), [ai-dlc.md](ai-dlc.md).
+[ai-security.md](ai-security.md), [ai-dlc.md](ai-dlc.md),
+[coding-agents-in-large-codebases.md](coding-agents-in-large-codebases.md).
 
 ## Contents
 

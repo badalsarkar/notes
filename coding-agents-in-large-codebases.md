@@ -797,5 +797,6 @@ The most useful evidence for a capital markets reader is the gap between enginee
 
 - [knowledge-graphs-for-coding-agents.md](knowledge-graphs-for-coding-agents.md) covers context layers and retrieval for agents on large codebases.
 - [ai-dlc.md](ai-dlc.md), [aidlc-context-management.md](aidlc-context-management.md), [aidlc-context-across-sdlc-stages.md](aidlc-context-across-sdlc-stages.md) and [sdlc-context-graph.md](sdlc-context-graph.md) cover AI-DLC and its context handling.
+- [context-engineering.md](context-engineering.md) covers context engineering practices and enterprise context layers.
 - [agentic-ai.md](agentic-ai.md) covers agentic methods more broadly.
 - [ai-security.md](ai-security.md) covers prompt injection and agent security.
