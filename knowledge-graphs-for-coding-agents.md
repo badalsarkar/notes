@@ -1,22 +1,22 @@
-# Layered context outperforms a single knowledge graph
+# Knowledge Graphs for Coding Agents
 
 Teams that run coding agents well on large codebases do not store engineering knowledge in one "technology knowledge graph". They build a layered context system in which each kind of knowledge sits in the store that suits it and reaches the agent through a matching channel. Short, human-written rules files (AGENTS.md, CLAUDE.md, Cursor rules) carry non-obvious conventions. On-demand skills carry procedures. MCP servers expose live sources such as code intelligence, service catalogs, tickets and documentation. Deterministic gates (permission settings, hooks, scanners and CI) enforce what must never be left to the model. For codebase knowledge at the scale of about 1 million lines, the evidence favours hybrids that combine agentic grep-style search with precise symbol indexes and, for multi-hop dependency questions, a code graph. Semantic vector search helps mainly on large repositories where the query wording does not match the code. The independent evidence is thinner than the marketing suggests. Controlled 2026 studies found that repository context files do not reliably raise task success and can add about 20% to cost ([Gloaguen et al.](https://arxiv.org/abs/2602.11988)), and long-context benchmarks show accuracy falling as more context is added ([Chroma](https://www.trychroma.com/research/context-rot)). Most of the large gains that vendors report (Augment's 70%+, Qodo's 80% on its own benchmark, Bito's 47% token reduction) are vendor-run and unreplicated. For a capital markets firm the practical consequence is that the engineering effort should go into a permission-aware, auditable context layer behind a gateway, with small curated instruction files, precise code navigation, enforced security gates and an internal evaluation suite, rather than into a single graph database.
 
 ## Contents
 
-- [Knowledge reaches agents through four channels rather than one graph](#knowledge-reaches-agents-through-four-channels-rather-than-one-graph)
-- [Five retrieval families compete to represent a million lines of code](#five-retrieval-families-compete-to-represent-a-million-lines-of-code)
-- [Rules files advise the agent while hooks and CI gates enforce policy](#rules-files-advise-the-agent-while-hooks-and-ci-gates-enforce-policy)
-- [Commercial context engines split into code-structure and organizational camps](#commercial-context-engines-split-into-code-structure-and-organizational-camps)
-- [Most performance numbers are vendor-reported and untested at 1M LOC](#most-performance-numbers-are-vendor-reported-and-untested-at-1m-loc)
-- [Accuracy falls as context grows so maintenance matters more than volume](#accuracy-falls-as-context-grows-so-maintenance-matters-more-than-volume)
-- [Persistent context opens supply-chain and injection risks](#persistent-context-opens-supply-chain-and-injection-risks)
-- [Banks and big tech build federated context layers behind gateways](#banks-and-big-tech-build-federated-context-layers-behind-gateways)
-- [A reference architecture for a 1M-LOC capital markets estate](#a-reference-architecture-for-a-1m-loc-capital-markets-estate)
+- [Channels for delivering knowledge to agents](#channels-for-delivering-knowledge-to-agents)
+- [Retrieval approaches for a million lines of code](#retrieval-approaches-for-a-million-lines-of-code)
+- [Rules files and policy enforcement](#rules-files-and-policy-enforcement)
+- [Commercial context engines](#commercial-context-engines)
+- [Evidence on performance claims](#evidence-on-performance-claims)
+- [Context growth, accuracy and maintenance](#context-growth-accuracy-and-maintenance)
+- [Security risks of persistent context](#security-risks-of-persistent-context)
+- [Enterprise practice at banks and large technology firms](#enterprise-practice-at-banks-and-large-technology-firms)
+- [Reference architecture for a 1M-LOC capital markets estate](#reference-architecture-for-a-1m-loc-capital-markets-estate)
 - [Conclusion](#conclusion)
 - [Resources](#resources)
 
-## Knowledge reaches agents through four channels rather than one graph
+## Channels for delivering knowledge to agents
 
 The question of how to "feed technology knowledge to an agent" breaks down into five kinds of knowledge with very different properties. Tech standards and conventions are small, slow-changing and must apply almost everywhere. Security policies are partly guidance and partly hard constraints. Architecture knowledge (service boundaries, ownership, API contracts, decision records) changes at the pace of design decisions and lives in catalogs and documents. Codebase knowledge for a million lines changes with every merge and is far too large to place in a prompt. Organizational knowledge (why a decision was made, which ticket motivated a change) is scattered across tickets, pull requests and chat. Every major vendor has converged on the same small set of channels for delivering these: always-loaded instruction files, scoped or on-demand instructions (path-scoped rules and Agent Skills), tool access through MCP servers, and deterministic enforcement outside the model ([Claude Code memory docs](https://code.claude.com/docs/en/memory); [agentskills.io](https://agentskills.io/); [Cursor rules](https://cursor.com/docs/context/rules)).
 
@@ -31,13 +31,13 @@ The enterprise case studies show what a "knowledge graph" means in practice. Ube
 | Codebase (1M LOC) | Large, changes every merge | Search index, symbol index, optional embeddings and code graph | Agent tools (grep, symbol lookup, graph queries) via MCP | Incremental re-indexing on changed files |
 | Organizational history | Very large, unstructured | Ticketing, wiki, chat, PR history | Permission-trimmed MCP search | Source systems remain authoritative |
 
-## Five retrieval families compete to represent a million lines of code
+## Retrieval approaches for a million lines of code
 
 Codebase knowledge is the hardest layer, and production systems use five families of technique: agentic lexical search, embedding retrieval, compressed repository maps, precise symbol indexes, and code or knowledge graphs. The main difference between them is when the work is done. Indexes pay their cost up front and need a freshness pipeline, while agentic search pays at query time in latency and tokens. By 2026 most serious systems are hybrids. Cursor states that grep and semantic search together give its best results ([Cursor](https://cursor.com/blog/semsearch)), and Sourcegraph describes a retrieve-then-rank pipeline that combines keyword search, embeddings and graph analysis ([Sourcegraph](https://www.plushcap.com/content/sourcegraph/blog/sourcegraph-lessons-from-building-ai-coding-assistants-context-retrieval-and-evaluation)).
 
 The worked examples below use a hypothetical 1M-LOC post-trade platform made up of a Java trade settlement core, Kotlin and Python services for reference data and the counterparty hierarchy, a client mandate and restriction rules engine, a trade surveillance service, a regulatory reporting pipeline fed from Kafka topics, and a residue of SQL stored procedures and KDB+/q analytics.
 
-### Agentic search reads the live tree at query time
+### Agentic search
 
 **How it works.** The agent holds lightweight identifiers such as file paths and search patterns and loads content at runtime with grep, glob and file reads, without any pre-built index ([Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). Claude Code's team reportedly started with a local vector database and switched to agentic search because it worked better, citing staleness and security concerns, though Boris Cherny described the evidence as "mostly vibes" plus some internal benchmarks ([OfficeChai](https://officechai.com/ai/claude-researcher-explains-how-agentic-search-performed-better-than-rag-for-code-generation/)). Cognition's SWE-grep is a variant in which a small model trained with reinforcement learning issues up to eight parallel grep and read calls per turn for at most four turns, and returns file and line lists rather than summaries ([Cognition](https://cognition.com/blog/swe-grep)).
 
@@ -49,7 +49,7 @@ The worked examples below use a hypothetical 1M-LOC post-trade platform made up 
 
 **Worked example.** Agentic search fits a production incident in the settlement core where the logs show `SSI_MISMATCH` on a failed instruction, because the error code is a literal string that leads directly to the validator and its tests. It does not fit the question "where do we compute the contractual settlement date for T+1 markets?" when the code variously uses `valueDate`, `sd`, `contractualSettle` and a calendar service with a different name, because the agent must guess the vocabulary across a million lines and will spend many turns doing so.
 
-### Embedding retrieval finds code by meaning
+### Embedding retrieval
 
 **How it works.** Code is split into chunks, embedded, and stored in a vector index that the agent queries in natural language. Cursor trains its own embedding model on agent session traces so that similarity scores match what an LLM judged most helpful at each step ([Cursor](https://cursor.com/blog/semsearch)). Greptile argues that natural-language queries and raw code do not land near each other in embedding space, so it generates docstrings per AST node and embeds those instead ([Greptile](https://www.greptile.com/blog/semantic-codebase-search)).
 
@@ -61,7 +61,7 @@ The worked examples below use a hypothetical 1M-LOC post-trade platform made up 
 
 **Worked example.** Embedding retrieval fits the T+1 settlement-date question above, because "settlement date calculation for T+1" lands near the relevant code even when the names differ. It does not fit the question "which services call `CounterpartyHierarchy.getUltimateParent()` and would break if it returned an empty optional?", because similarity search returns code that looks related rather than the exact set of callers, and a missed caller in a credit-exposure aggregation path is a correctness problem rather than a ranking problem.
 
-### Repository maps give orientation within a fixed token budget
+### Repository maps
 
 **How it works.** Aider uses tree-sitter to extract where symbols are defined and referenced, builds a file graph, ranks it with PageRank personalised toward the files being edited, and emits a compact text map within a token budget that defaults to 1,000 tokens ([Aider](https://aider.chat/2023/10/22/repomap.html)). An analysis of the source gives the budget formula as max(1024, min(max_input_tokens/8, 4096)) ([hermes-agent issue #535](https://github.com/NousResearch/hermes-agent/issues/535)).
 
@@ -73,7 +73,7 @@ The worked examples below use a hypothetical 1M-LOC post-trade platform made up 
 
 **Worked example.** A repository map fits a 30,000-line trade surveillance alert-enrichment service, where a 4,000-token map can name the main detectors, enrichers and their dependencies. It does not fit the whole post-trade monolith, where the map would keep only the most-referenced utility classes (logging, money, date helpers) and hide the business logic the agent actually needs.
 
-### Precise symbol indexes answer definition and reference questions exactly
+### Precise symbol indexes
 
 **How it works.** A per-language indexer, usually driven by the build, records every definition and reference. Sourcegraph's SCIP replaced LSIF partly because SCIP can re-index only changed files ([Sourcegraph](https://sourcegraph.com/blog/announcing-scip)). Meta's Glean stores facts in RocksDB, targets incremental cost proportional to the change, answers simple declaration lookups in about a millisecond, and follows cross-language edges across Thrift RPC and FFI ([Meta Engineering](https://engineering.fb.com/2024/12/19/developer-tools/glean-open-source-code-indexing/)). Serena gets the same precision from live language servers across more than 40 languages ([rywalker.com](https://rywalker.com/research/serena)), and Moderne's Lossless Semantic Tree adds full type attribution by invoking the repository's real Gradle or Maven build ([Moderne](https://docs.moderne.io/user-documentation/agent-tools/mcp/overview/)).
 
@@ -85,7 +85,7 @@ The worked examples below use a hypothetical 1M-LOC post-trade platform made up 
 
 **Worked example.** A symbol index fits a change to the mandate engine's `isRestricted(account, instrument)` signature in a Gradle-built Java and Kotlin monorepo, because it returns every call site, including those in the pre-trade compliance check and the end-of-day breach report, and Moderne-style tooling can apply the change deterministically. It does not fit the KDB+/q tick analytics or the stored procedures that populate the reporting warehouse, because no indexer covers them and the agent falls back to grep there.
 
-### Code graphs follow multi-hop and hidden dependencies
+### Code graphs
 
 **How it works.** A graph of files, classes, functions and their containment, import, call and inheritance edges is built, usually with tree-sitter, and exposed to the agent as traversal or query tools. Research systems include RepoGraph (line-level dependency graph, ICLR 2025) ([arXiv 2410.14684](https://arxiv.org/abs/2410.14684)), LocAgent (heterogeneous graph with traversal tools) ([arXiv 2503.09089](https://arxiv.org/abs/2503.09089)), KGCompass (links issues and PRs to code entities) ([arXiv 2503.21710](https://arxiv.org/abs/2503.21710)) and CodeCompass (dependency graph served over MCP) ([arXiv 2602.20048](https://arxiv.org/abs/2602.20048)). Open-source MCP servers such as code-graph-rag (Memgraph), CodeGraphContext (Neo4j) and codebase-memory-mcp (single binary, 158 languages) package the same idea ([wal.sh survey](https://wal.sh/research/2026-code-graph-mcp-survey/)).
 
@@ -107,11 +107,11 @@ The worked examples below use a hypothetical 1M-LOC post-trade platform made up 
 | Precise symbol index (SCIP, Glean, LSP, LST) | Definitions, references, impact, refactoring | Compiler-accurate and fast | Per-language indexers, build dependency, code only | High (CI indexing per language) | Incremental on changed files | Industrial use at Meta and Sourcegraph, no agent benchmark |
 | Code graph (tree-sitter or research graphs) | Multi-hop and hidden dependencies | Strong academic localization gains | Approximate resolution, agents underuse it | Low to high depending on backend | Varies, often batch | Peer-reviewed but small Python repos |
 
-## Rules files advise the agent while hooks and CI gates enforce policy
+## Rules files and policy enforcement
 
 Standards, security policies and architecture reach the agent through four mechanisms, and the most important design decision is which of them is advisory and which is binding. Anthropic's documentation states that CLAUDE.md content is "context, not enforced configuration", and that blocking a tool, command or path belongs in managed permission settings or a PreToolUse hook ([Claude Code memory docs](https://code.claude.com/docs/en/memory)). That distinction applies equally to every vendor.
 
-### Instruction files carry short conventions that apply everywhere
+### Instruction files
 
 **How it works.** A Markdown file is loaded into every session, layered from organization to user to repository to directory. AGENTS.md is the cross-vendor baseline and has been governed by the Linux Foundation's Agentic AI Foundation since December 2025 ([agents.md](https://agents.md/); [OpenAI](https://openai.com/blog/agentic-ai-foundation)). The nearest file to the edited code wins, and Codex concatenates files root to leaf until a default limit of 32 KiB, beyond which content is silently dropped ([Codex docs](https://learn.chatgpt.com/docs/agent-configuration/agents-md)). Claude Code supports a managed CLAUDE.md distributed by MDM or Ansible that developers cannot exclude, path-scoped `.claude/rules/` files, and symlinks to a shared standards repository ([Claude Code memory docs](https://code.claude.com/docs/en/memory)). Cursor team rules can be enforced from a dashboard ([Cursor](https://cursor.com/docs/context/rules)), and Copilot organization instructions apply on GitHub.com surfaces only ([GitHub docs](https://docs.github.com/en/copilot/reference/custom-instructions-support)).
 
@@ -123,7 +123,7 @@ Standards, security policies and architecture reach the agent through four mecha
 
 **Worked example.** An instruction file fits conventions like "represent monetary amounts with the firm's `Money` type and never with `double`", "use the shared `BusinessDayCalendar` for settlement dates", and "run `./gradlew check` before proposing a change", because these are short, non-obvious and apply across the settlement and reporting code. It does not fit an attempt to paste the firm's 300-page secure coding standard or the full list of client mandate restrictions into the file, because the length will reduce adherence, the content will be truncated or ignored, and the restriction data belongs in the rules engine rather than in a prompt.
 
-### Agent Skills package procedures that load on demand
+### Agent Skills
 
 **How it works.** A skill is a folder with a `SKILL.md` file (name and description frontmatter) plus optional scripts and reference files. Only the name and description load at start-up, the full instructions load when a task matches, and bundled files load during execution ([agentskills.io](https://agentskills.io/)). Anthropic released the format as an open standard, and aggregators report support in more than 30 tools by April 2026 ([noqta.tn](https://noqta.tn/en/news/skill-md-open-standard-30-ai-coding-tools-adoption-2026)).
 
@@ -135,7 +135,7 @@ Standards, security policies and architecture reach the agent through four mecha
 
 **Worked example.** A skill fits "add a new field to the EMIR trade report", which involves a schema change, a mapping, a golden-file regression test and a sign-off checklist, and which is needed a few times a quarter. It does not fit "never write client account numbers or LEIs to application logs", because that rule must apply on every change and cannot depend on the agent choosing to load a skill.
 
-### MCP servers deliver live architecture and organizational knowledge
+### MCP servers
 
 **How it works.** An MCP server exposes tools and data that the agent calls at runtime. Backstage ships an MCP actions backend that exposes catalog actions as MCP tools ([Backstage](https://backstage.io/docs/ai/mcp-actions)). Context7 serves version-specific library documentation ([GitHub upstash/context7](https://github.com/upstash/context7)). Community ADR servers query decision records and claim to detect drift from code, though they have small user bases ([glama](https://glama.ai/mcp/servers/tosin2013/mcp-adr-analysis-server)). Kiro steering files can embed live workspace files such as an OpenAPI spec through `#[[file:path]]` references, which is a file-based alternative that avoids copy drift ([Kiro docs](https://kiro.dev/docs/steering/)).
 
@@ -147,7 +147,7 @@ Standards, security policies and architecture reach the agent through four mecha
 
 **Worked example.** An MCP server fits "who owns the counterparty hierarchy service, what is its current API version, and which ADR decided that ultimate-parent resolution is cached for 24 hours?", because the catalog and ADR folder answer this authoritatively and the answer changes over time. It does not fit a rarely changing convention such as the logging format, where a one-line rule is cheaper than a tool round trip.
 
-### Enforcement gates make policy binding
+### Enforcement gates
 
 **How it works.** Managed permission deny lists and sandbox settings block commands and paths, PreToolUse hooks run code before an action regardless of what the model decides ([Claude Code memory docs](https://code.claude.com/docs/en/memory)), in-loop scanners such as Semgrep Guardian scan each file the agent writes and return findings ([Semgrep Guardian](https://docs.semgrep.dev/guardian)), and CI gates reject non-compliant pull requests.
 
@@ -166,7 +166,7 @@ Standards, security policies and architecture reach the agent through four mecha
 | MCP servers | Advisory content, live source | Tool definitions only | Architecture, catalog, tickets, docs, code intelligence | Injection and over-broad tokens | Owners of the source system plus gateway team |
 | Hooks, permissions, scanners, CI | Binding | None | Security and compliance constraints | Only covers what is expressible as a rule | Security engineering |
 
-## Commercial context engines split into code-structure and organizational camps
+## Commercial context engines
 
 By late 2026 nearly every commercial context engine exposes its index to third-party agents through MCP, so the market has moved from selling an IDE assistant to selling a context layer for any agent. The products split into code-structure engines that are precise about code but ignore tickets and chat, and organizational engines that cover tickets and chat but treat code as text. Tabnine and Bito explicitly claim to join both in a single graph. The table below summarises each product on the same dimensions. Unless marked otherwise, performance figures are vendor claims.
 
@@ -190,7 +190,7 @@ The open-source landscape adds tools that a firm can self-host. Serena wraps lan
 
 The research found no product that offers an open, temporal knowledge graph joining precise code symbols with tickets, pull requests and ADRs. Commercial vendors claim parts of this, so a firm that wants the whole picture today either combines a code-structure engine with an organizational engine behind one gateway or builds the join itself.
 
-## Most performance numbers are vendor-reported and untested at 1M LOC
+## Evidence on performance claims
 
 The evidence base has three tiers, and a decision-maker should weight them very differently. Peer-reviewed or preprint studies are controlled but run mostly on Python repositories far smaller than a million lines. Vendor-run evaluations are larger and closer to production but are not independently replicated and often use the vendor's own benchmark. Practitioner and aggregator claims are the weakest and sometimes conflict with each other. No study found in this research compares retrieval approaches in a controlled way at 1M+ LOC, and no peer-reviewed benchmark uses repositories at that scale.
 
@@ -209,7 +209,7 @@ The evidence base has three tiers, and a decision-maker should weight them very 
 
 Two patterns stand out when the tiers are read together. First, the anti-index position (Anthropic, Cline) rests on operational arguments about freshness and intellectual-property copies, while the pro-index position (Cursor, Augment) rests on vendor accuracy numbers that grow with repository size. These positions measure different things and are not in direct conflict. Second, Cursor's own data shows the average benefit of semantic search is small (+0.3% retention) and the benefit on large repositories is larger (+2.6%), which is consistent with grep being adequate for small and medium repositories and insufficient for vocabulary-mismatch queries in large ones ([Cursor](https://cursor.com/blog/semsearch)). For a 1M-LOC estate, the honest conclusion is that each firm needs its own evaluation, because the public data cannot settle the question at that scale.
 
-## Accuracy falls as context grows so maintenance matters more than volume
+## Context growth, accuracy and maintenance
 
 The case for careful context curation rests on independent evidence that models get worse as context grows, even well below their advertised window sizes. Chroma tested 18 models and found that performance degraded with input length in every experiment, that a single semantically similar distractor lowered accuracy, and that focused prompts of about 300 tokens beat full prompts of about 113,000 tokens on LongMemEval for every model ([Chroma](https://www.trychroma.com/research/context-rot)). NoLiMa found that on its hard subset, where the answer requires a non-literal association, Llama 3.3 70B fell from 98.3 to 8.9 at 32,000 tokens ([NoLiMa](https://arxiv.org/html/2502.05167v3)). "Lost in the Middle" found that models do worst when the relevant document sits in the middle of the context ([Liu et al.](https://arxiv.org/abs/2307.03172v3)), although Chroma did not observe a position effect on its simpler task with newer models. For code, the distractor finding is the most relevant, because a large codebase is full of similar functions, deprecated versions of the same API and copy-pasted variants, and each one placed in context next to the correct code lowers accuracy.
 
@@ -219,7 +219,7 @@ Keeping knowledge fresh is a separate problem from fitting it into the window. C
 
 The evaluation evidence on context files is the most useful guide for what to put in them. In Gloaguen et al., LLM-generated context files reduced resolution by about 0.5 points on SWE-bench Lite and about 2 points on the new CTXbench, developer-written files gave a non-significant +2.4 points, and both added steps and roughly 19 to 23% cost. Codebase overviews appeared in nearly every generated file and did not reduce the steps needed to reach the files the reference patch changed. The authors recommend omitting LLM-generated files and limiting human-written files to non-obvious requirements ([Gloaguen et al. v3](https://arxiv.org/html/2602.11988v3)). The v1 abstract stated that the files "tend to reduce" success, and the wording was softened in later versions ([arXiv v1](https://arxiv.org/abs/2602.11988v1)). Khatri's 291-run study on merged PRs found no effect from either always-on or selective context files, with a minimum detectable effect above 30 points, and attributed the remaining failures to implementation skill such as architectural choice and exact wiring rather than missing repository knowledge ([Khatri](https://arxiv.org/html/2607.27250v1)). Lulla et al. found a 28.64% lower median runtime and 16.58% fewer output tokens with AGENTS.md at comparable completion ([Lulla et al.](https://arxiv.org/abs/2601.20404)), which conflicts with Gloaguen's cost finding because the two studies measure different things. The defensible reading is that short human-written files change agent behaviour in targeted ways, that general overviews cost tokens without improving navigation, and that the effects are small enough that a firm must measure them on its own tasks.
 
-## Persistent context opens supply-chain and injection risks
+## Security risks of persistent context
 
 Every persistent context source is a place an attacker can write to, and every retrieval source is a place an attacker can inject instructions. Pillar Security showed that hidden instructions in Cursor and Copilot rules files, using invisible Unicode characters, could make the agent insert malicious scripts and hide the change from the developer, that poisoned rules persist across future sessions and forks, and that they can spread through shared rule repositories ([Pillar Security](https://pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents)). Cursor and GitHub responded that reviewing output is the user's responsibility. Invariant Labs showed that a malicious public GitHub issue could hijack an agent using the official GitHub MCP server into leaking private repository data into a public pull request, with no server bug involved, only prompt injection and a broadly scoped token ([Invariant Labs](https://invariantlabs.ai/blog/mcp-github-vulnerability)). Simon Willison is quoted as saying that convincing mitigations do not yet exist ([DevClass](https://devclass.com/2025/05/27/researchers-warn-of-prompt-injection-vulnerability-in-github-mcp-with-no-obvious-fix/)), and the concrete mitigations documented are least-privilege, per-repository tokens and limiting the agent to content from trusted authors ([Docker](https://www.docker.com/blog/mcp-horror-stories-github-prompt-injection/)).
 
@@ -227,7 +227,7 @@ Hallucinated dependencies are the other major supply-chain risk, and they are pr
 
 Regulated firms add requirements that most public material does not address for coding agents specifically. The banks with public accounts built their tools in-house on licensed models rather than sending code to unmanaged services ([American Banker](https://www.americanbanker.com/news/morgan-stanleys-michael-pizzi-is-27-on-the-most-innovative-people-in-finance-ranking); [Reuters via Yahoo](https://finance.yahoo.com/news/jpmorgan-engineers-efficiency-jumps-much-190410471.html)). Vendor commentary stresses immutable audit logs, residency inside the firm's tenancy, and the absence of audit-rights clauses in many frontier-model API terms ([Diagrid](https://www.diagrid.io/infrastructure/2026-compliance-checklist-ai-agents-banking); [Sardine](https://www.sardine.ai/blog/agentic-ai-in-banking)). Several vendor blogs report that the April 2026 interagency guidance SR 26-2 superseded SR 11-7 and placed generative and agentic AI outside formal model-risk scope ([Arthur.ai](https://www.arthur.ai/column/ai-agent-compliance-tools-for-banks-a-guide)), but the primary text was not checked in this research, so a firm should confirm this with its model risk function before relying on it. If the report is accurate, coding agents would fall under existing SDLC, change-management and third-party risk controls, which makes audit trails of what context the agent saw and what it changed even more important.
 
-## Banks and big tech build federated context layers behind gateways
+## Enterprise practice at banks and large technology firms
 
 The enterprises with detailed public accounts share an architecture, and the largest gains come from bounded transformation work rather than general coding. Morgan Stanley's in-house DevGen.AI produces plain-English specifications from legacy code. It reviewed about 9 million lines in its first five months, saving an estimated 280,000 developer hours across about 15,000 developers, and reached about 16 million lines by February 2026 (company-reported) ([TMCnet summary of WSJ](https://blog.tmcnet.com/blog/rich-tehrani/ai/morgan-stanley-uses-ai-to-translate-cobol.html); [American Banker](https://www.americanbanker.com/news/morgan-stanleys-michael-pizzi-is-27-on-the-most-innovative-people-in-finance-ranking)). The bank said fully automated translation was not yet mature. JPMorgan's CIO reported 10 to 20% productivity gains for tens of thousands of engineers using an internal assistant ([Reuters via Yahoo](https://finance.yahoo.com/news/jpmorgan-engineers-efficiency-jumps-much-190410471.html)). Goldman Sachs began a supervised pilot of Devin alongside about 12,000 developers in 2025 ([eWeek](https://www.eweek.com/news/goldman-sachs-ai-coding-agent-devin/)), and its productivity figures were not traced to a primary disclosure. Nubank used Devin to split a monolith of more than 6 million lines, with Cognition reporting an 8 to 12 times gain in engineering hours (vendor case study) ([Devin](https://devin.ai/customers)).
 
@@ -237,7 +237,7 @@ Legacy modernization is where explicit knowledge graphs for code are most mature
 
 The broader trends point in one direction. DORA 2025 found AI use at 90% of about 5,000 respondents and concluded that AI amplifies the existing strengths and weaknesses of an organization, with loosely coupled architectures and AI-accessible internal data among the capabilities that determine benefit ([Google Cloud](https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report)). Trust is falling: in Stack Overflow's 2025 survey distrust of AI accuracy rose to 46% and only about 33% trusted AI output ([InfoWorld](https://infoworld.com/article/4031673/ai-use-among-software-developers-grows-but-trust-remains-an-issue-stack-overflow-survey.html)). Standards are consolidating under neutral governance. The Agentic AI Foundation launched in December 2025 with MCP, AGENTS.md and goose as founding projects and Bloomberg as a Platinum member ([SiliconANGLE](https://siliconangle.com/2025/12/09/linux-foundation-announces-agentic-ai-foundation-joined-anthropic-openai-block/)), and a secondary source reports that Wells Fargo and Visa joined later ([Latent Space wiki](https://latent.space/wiki/aaif/)). Adoption of context files is growing from a low base, with an academic sample finding only about 5% of repositories using any format in late 2025 ([arXiv 2510.21413](https://arxiv.org/html/2510.21413v1)). The practical effect of standardization is that a firm can build one internal context layer (AGENTS.md for static instructions, Skills for procedures, MCP for live access, a gateway for policy) and serve it to several vendors' agents, which reduces lock-in at a time when banks are buying from more than one vendor.
 
-## A reference architecture for a 1M-LOC capital markets estate
+## Reference architecture for a 1M-LOC capital markets estate
 
 The recommendation follows from the evidence above. Put binding constraints outside the model, keep always-loaded instructions short, give the agent precise and fresh code navigation, expose architecture and history through permission-aware tools behind a gateway, and measure every layer on the firm's own tasks. The architecture below is my synthesis for a firm with about 1 million lines across a post-trade platform, a mandate rules engine, a surveillance service and a reporting pipeline. Each layer names what it holds, the recommended technology, and the limitation to plan for.
 
