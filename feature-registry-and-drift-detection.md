@@ -32,7 +32,14 @@ Design note, November 2026. Related notes: [code-intelligence-tools.md](code-int
   - [8.1 How the instructions handle stack and size](#81-how-the-instructions-handle-stack-and-size)
   - [8.2 The skill file](#82-the-skill-file)
   - [8.3 Usage notes](#83-usage-notes)
-- [9. Limitations](#9-limitations)
+- [9. Module cards](#9-module-cards)
+  - [9.1 What a module card is for](#91-what-a-module-card-is-for)
+  - [9.2 Relationship to the feature registry](#92-relationship-to-the-feature-registry)
+  - [9.3 What a card contains](#93-what-a-card-contains)
+  - [9.4 Where cards live and how they stay current](#94-where-cards-live-and-how-they-stay-current)
+  - [9.5 The skill](#95-the-skill)
+  - [9.6 Usage notes](#96-usage-notes)
+- [10. Limitations](#10-limitations)
 - [Resources](#resources)
 
 ## 1. Summary
@@ -48,6 +55,7 @@ Design note, November 2026. Related notes: [code-intelligence-tools.md](code-int
 - The recommended starting set of checks is regenerate-and-diff, reference validation and footprint fingerprints, because they are deterministic and cheap.
   - Executable acceptance criteria should be added for high-risk features, and an advisory language-model review should be added last.
 - The checks should run inside the coding agent's loop through hooks as well as in CI, so the agent repairs drift before a human reviews the pull request.
+- A module card complements the registry by describing each unit of code ownership in business terms, including its purpose, responsibilities, domain concepts, relationships and rules, without file or line references.
 
 ## 2. Why map features to code
 
@@ -533,7 +541,339 @@ signals clearly support it, otherwise propose a new feature. Never delete a feat
 - Mainframe estates and applications that rely heavily on dependency injection or reflection will produce more unassigned entry points and weaker key symbols.
   - Output from a mainframe analyser, as described in [code-intelligence-tools.md](code-intelligence-tools.md), can supply the missing call relationships for COBOL and JCL.
 
-## 9. Limitations
+## 9. Module cards
+
+### 9.1 What a module card is for
+
+- A module card describes what a module is for and how it relates to the rest of the system, at a level the code alone does not show.
+  - It answers why the module exists, which business capabilities it realises, which domain concepts it owns, what it promises to other modules, which rules must always hold, and how to change it safely.
+- A card is not an index of the code.
+  - It contains no file paths below the module root, no line numbers and no code excerpts, because tools can find those at query time and they go stale.
+  - It refers to code only through stable names, such as the module identifier, contract names, domain type names, topic and table names, and test suite names.
+- The design follows the same principle as the feature registry, which is that people supply meaning and tools supply locations.
+  - The semantic sections are drafted by an agent, marked as proposed, and confirmed by the module owner.
+  - The factual fields are extracted by tools from build files, contracts, migrations, CODEOWNERS and git history.
+
+### 9.2 Relationship to the feature registry
+
+- The feature registry is organised by business capability, and the module card is organised by unit of code ownership.
+- The two link through identifiers.
+  - A card lists the feature identifiers it realises in its `capabilities` field.
+  - A feature identifies the modules that realise it through the `unit` recorded on each of its entry points.
+- The domain concepts table in each card acts as the shared glossary that maps business terms to code names, which is the bridge an agent needs to turn a ticket into the right code.
+- A card is useful on its own when no feature registry exists, so an organisation can start with cards for its most-changed modules and add the registry later.
+
+### 9.3 What a card contains
+
+| Section | Content | Source | Default status |
+|---|---|---|---|
+| Frontmatter facts | Identifier, archetypes, owner, commands, internal dependencies, frameworks, contracts provided and consumed, data owned, flags, modules that change together, linked features and decisions | Build files, API and schema files, migrations, CODEOWNERS, CI configuration, git history | Generated |
+| Purpose | The business reason the module exists and the outcome it produces | READMEs, ADRs, catalog entry, domain types | Proposed |
+| Responsibilities and non-responsibilities | What the module does, and what belongs elsewhere with the module that owns it | Code structure, ADRs, review comments | Proposed |
+| Domain concepts | Business terms, their meaning, their names in code and their synonyms | Domain types, UI text, documents, tickets | Proposed |
+| Relationships | Each important neighbouring module, the nature of the relationship and the reason for it | Dependencies, contracts, documents | Proposed |
+| Business rules and invariants | Rules stated in business terms, with identifiers and the test suites that check them | Tests, validation code, specifications | Proposed until the owner confirms |
+| Behaviour defined outside the code | Rules, reference data, workflow models or schemas held elsewhere | Configuration and data scans | Proposed |
+| Non-functional expectations | Cut-off times, latency, batch windows, data classification and regulatory drivers | Documents and configuration | Proposed |
+| How to change it safely | Conventions, example types to copy, deprecated approaches and required tests | Code patterns, review comments, documents | Proposed |
+| Known traps | Surprising behaviour, ordering assumptions, shared state and past incidents | Incidents, review comments, owners | Proposed |
+| Open questions | Specific questions for the owner | Generator | Generated |
+
+- The non-responsibilities section deserves particular attention, because it is what stops an agent from adding logic to the wrong module.
+- Business rules are always proposed until a person confirms them, because an agent cannot tell an intended rule from an accidental behaviour of the code.
+- The card should stay under about 150 lines, and a longer card is a sign that the module is too large or that the card holds detail the code index should hold.
+
+### 9.4 Where cards live and how they stay current
+
+- A card is written to `MODULE.md` in the module's root directory, so an agent exploring that directory encounters it.
+  - If the repository already keeps cards elsewhere, such as `docs/modules/<id>.md`, the skill follows that convention.
+- The frontmatter records a status for each section, and the generator never overwrites a confirmed section.
+  - In refresh mode it re-extracts the factual fields, compares `source_commit` with the current commit, and proposes changes to semantic sections in its report instead of editing them.
+- The drift mechanisms in section 5 apply to cards in the following way.
+  - Regenerate and diff covers the frontmatter facts.
+  - Reference validation checks that every contract, topic, table and flag named in a card exists in the code, and the validator script in the skill performs this check.
+  - Footprint fingerprints operate at module level, so a pull request that changes a module whose card contains confirmed rules prompts a review of those rules.
+- A consistency pass across cards checks that relationships agree in both directions, that each domain concept has one owning module, and that no two modules claim the same responsibility.
+
+### 9.5 The skill
+
+- The skill is installed as a user-level Claude Code skill at `~/.claude/skills/module-card/`, so it is available in every repository.
+  - `SKILL.md` holds the procedure, which is reproduced below.
+  - `templates/MODULE.md` holds the card template, which is reproduced below.
+  - `scripts/validate_module_card.py` checks required frontmatter fields, searches the repository for every contract, topic, table and flag named in the frontmatter while ignoring the cards themselves, rejects line-number references and fenced code excerpts, and warns about deep file paths, cards over the line limit and items still marked as proposed.
+- The validator uses PyYAML when it is installed and falls back to checking only key presence when it is not.
+
+`SKILL.md`:
+
+````markdown
+---
+name: module-card
+description: Generate, refresh or validate a module card (MODULE.md) that describes what a module is for, the business capabilities it realises, the domain concepts it owns, its contracts, dependencies, invariants and how to change it safely. Use when asked to create, update, review or check module cards for one module or a whole codebase.
+---
+
+# Module card generation
+
+## Goal
+
+A module card tells a person or a coding agent what a module is for and how it relates to the
+rest of the system, at a level the code alone does not show. It answers these questions:
+
+- Why does this module exist, and which business capabilities does it realise?
+- Which domain concepts does it own, and what are they called in the code?
+- What does it promise to other modules, and what does it rely on from them?
+- Which rules must always hold, and where are the traps?
+- How do I build, test and change it safely?
+
+A card is not an index of the code. It contains no file paths below the module root, no line
+numbers and no code excerpts, because tools can find those at query time and they go stale.
+It refers to code only through stable names: the module identifier, contract names, domain
+type names, topic and table names, and test suite names.
+
+## Ground rules
+
+- Extract facts with deterministic tools wherever possible: build files, API and schema files,
+  CODEOWNERS, configuration and git history. Use judgement only for purpose, responsibilities,
+  concepts and relationships, and mark those as proposed until a person confirms them.
+- Never invent a name, contract, dependency, topic, table, rule or ticket. Every name you write
+  must exist in the repository or in a document you read.
+- Never overwrite a section or field that a person has confirmed. Propose a change in the
+  report instead.
+- Write every statement as a plain, full sentence. Do not write marketing language or general
+  descriptions that would be true of any module, such as "handles business logic".
+- Keep the card short. A card longer than about 150 lines is a sign that the module is too
+  large or that the card contains detail the code index should hold.
+- Do not record secrets, credentials, production hostnames or personal data.
+- When you cannot determine something, write a specific question for a person rather than a
+  guess.
+
+## Step 1: Identify modules
+
+1. Find deployable units and modules from build files (pom.xml, build.gradle, settings.gradle,
+   package.json workspaces, pyproject.toml, *.csproj and *.sln, go.mod, Cargo.toml workspaces,
+   Nx or Bazel targets, Helm charts, JCL libraries).
+2. Choose the card granularity. A card describes a unit that has its own purpose and owner,
+   usually a deployable service, a library, or a bounded context inside a modular monolith.
+   Do not create cards for small technical packages such as `utils` or `config`; mention them
+   in the parent module's card instead.
+3. Give each module a stable identifier such as `svc.settlement-engine`, `lib.money` or
+   `job.eod-sweep`. Reuse identifiers from the service catalog or existing cards if they exist.
+4. Classify the module's archetype: `service`, `consumer`, `stream-processor`, `library`,
+   `workflow`, `data-pipeline`, `ui`, `cli` or `batch`. A module may have more than one.
+5. For more than about ten modules, process them one at a time or in parallel sub-agents, and
+   then run a consistency pass across all cards (Step 6).
+
+## Step 2: Extract facts
+
+Collect these with tools, and mark them as `generated`:
+
+- **Build and run:** the commands to build, test, lint and run the module locally, taken from
+  build files, Makefiles, package scripts, CI configuration and README files. Run a command only
+  if it is safe and fast; otherwise record it without running it.
+- **Dependencies on other modules:** internal modules and libraries from the build files.
+- **Notable external dependencies:** frameworks and libraries that shape how code is written,
+  such as the web framework, messaging client, ORM and rules engine. Omit utility libraries.
+- **Contracts provided:** OpenAPI, AsyncAPI, Protobuf, Avro or GraphQL definitions, exported
+  library packages, CLI commands, and topics produced.
+- **Contracts consumed:** clients for other services, topics consumed, shared databases,
+  external APIs and file feeds.
+- **Data owned:** tables, schemas, collections and caches that this module writes, from
+  migrations and ORM mappings.
+- **Configuration that changes behaviour:** feature flags and key configuration properties.
+- **Ownership:** owners from CODEOWNERS or the service catalog.
+- **Change activity:** the modules this one most often changes together with, from git
+  history over the last 12 months. Use it to find hidden coupling.
+
+## Step 3: Gather context for the semantic sections
+
+Read, in this order, whatever exists: the module README, ADRs, design documents, the service
+catalog entry, API descriptions, test names and test descriptions, UI text, recent ticket keys
+and titles in commit messages, and review comments that recur in merged pull requests. Read the
+core domain types and the main entry points to understand what the module does. Do not read the
+whole module line by line.
+
+## Step 4: Draft the card
+
+Fill in the template in `templates/MODULE.md`. For each semantic section:
+
+- **Purpose:** two or three sentences on the business reason the module exists and the outcome
+  it produces. Name the business capability, not the technology.
+- **Responsibilities and non-responsibilities:** what the module does, and what a reader might
+  expect it to do but which belongs elsewhere, with the module that owns it. The
+  non-responsibilities prevent agents from adding logic in the wrong place.
+- **Capabilities realised:** the business features this module implements in whole or in part,
+  using feature identifiers from a feature registry if one exists.
+- **Domain concepts:** each business term the module owns or uses heavily, with its definition
+  and its names in the code (types, tables, topics). Include synonyms used by the business.
+- **Relationships:** for each important neighbouring module, the nature of the relationship and
+  the reason for it, for example "calls ref-data to resolve standing settlement instructions
+  because SSIs are owned there".
+- **Business rules and invariants:** rules that must always hold, stated in business terms, each
+  with an identifier if the organisation has one and the test suite that checks it if known.
+  Propose candidates from code and tests, but mark every rule as proposed, because only a
+  person can confirm that a rule is intended rather than accidental.
+- **Behaviour defined outside the code:** rules or reference data loaded from a database,
+  deployed workflow models, or schemas in a registry.
+- **Non-functional expectations:** cut-off times, latency or throughput expectations, batch
+  windows, data classification and regulatory drivers, when documented.
+- **How to change it safely:** the conventions to follow, the patterns to copy (name the
+  type or class to use as an example), deprecated approaches to avoid, and the tests that must
+  pass.
+- **Known traps:** surprising behaviour, ordering assumptions, shared state and past incidents.
+- **Decisions:** ADRs and design documents that explain why the module is shaped as it is.
+- **Open questions:** specific questions for the owner about anything you could not establish.
+
+Mark every proposed item with `(proposed)` at the end of the line, and record the status of
+each section in the frontmatter.
+
+## Step 5: Validate
+
+Run `python3 scripts/validate_module_card.py <path-to-MODULE.md> --root <repo-root>` from this
+skill's directory, or perform the same checks by hand if Python is not available:
+
+1. The frontmatter contains every required field and the identifier is unique.
+2. Every module, contract, type, topic, table, flag and test suite named in the card can be
+   found in the repository.
+3. No file path below the module root, line number or code excerpt appears in the card.
+4. Every confirmed section from the previous version is unchanged.
+5. The card is under about 150 lines.
+
+Fix every failure or report it.
+
+## Step 6: Consistency pass across modules
+
+When several cards exist, check that relationships agree in both directions, that each domain
+concept has one owning module, that no two modules claim the same responsibility, and that
+every non-responsibility names a module that does take it on. Report conflicts rather than
+resolving them silently.
+
+## Output
+
+- Write the card to `MODULE.md` in the module's root directory, unless the repository already
+  keeps cards elsewhere (for example `docs/modules/<id>.md`), in which case follow that
+  convention.
+- Produce a short report in the conversation: modules processed, sections still proposed,
+  validation results, cross-module conflicts, and the open questions grouped by owner.
+- Do not commit. Leave the changes for review.
+
+## Refresh mode
+
+When a card already exists, re-extract the generated facts, update them, and compare
+`source_commit` with the current commit. For semantic sections, check whether the code changes
+since `source_commit` affect them. If they do, propose changes in the report and add open
+questions instead of editing confirmed text. Update `source_commit` and `last_generated` only
+for the generated sections you refreshed.
+````
+
+`templates/MODULE.md`:
+
+````markdown
+---
+id: svc.example                      # stable identifier, reused from the service catalog if one exists
+name: Example Service
+archetypes: [service]                # service | consumer | stream-processor | library | workflow | data-pipeline | ui | cli | batch
+owner: team-example                  # from CODEOWNERS or the service catalog
+status: proposed                     # proposed | confirmed (overall status of the card)
+sections:                            # status per section; never overwrite a confirmed section
+  purpose: proposed
+  responsibilities: proposed
+  capabilities: proposed
+  concepts: proposed
+  relationships: proposed
+  rules: proposed
+  external_behaviour: proposed
+  non_functional: proposed
+  change_guidance: proposed
+  traps: proposed
+commands:                            # generated
+  build: ""
+  test: ""
+  lint: ""
+  run: ""
+depends_on: []                       # generated: internal modules and libraries
+key_external_dependencies: []        # generated: frameworks that shape the code
+provides:                            # generated: contracts other modules rely on
+  apis: []
+  topics: []
+  packages: []                       # libraries only: exported packages or entry modules
+consumes:                            # generated
+  apis: []
+  topics: []
+  external: []
+data_owned: []                       # generated: tables, schemas, collections
+flags: []                            # generated: feature flags and key configuration properties
+co_changes_with: []                  # generated: modules frequently changed in the same commits
+capabilities: []                     # feature identifiers from the feature registry, if one exists
+decisions: []                        # ADR identifiers or links
+source_commit: ""
+last_generated: ""
+---
+
+# Example Service
+
+## Purpose
+
+State in two or three sentences the business reason this module exists and the outcome it
+produces.
+
+## Responsibilities
+
+- State each thing this module is responsible for as a full sentence.
+
+### Not responsible for
+
+- State each thing a reader might expect here that belongs elsewhere, and name the module that
+  owns it.
+
+## Domain concepts
+
+| Business term | Meaning | Names in code | Also called |
+|---|---|---|---|
+| | | | |
+
+## Relationships
+
+| Module | Relationship | Reason |
+|---|---|---|
+| | calls / is called by / consumes from / publishes to / depends on | |
+
+## Business rules and invariants
+
+- **RULE-ID:** State the rule in business terms. Checked by: name the test suite. (proposed)
+
+## Behaviour defined outside the code
+
+- Describe any rules, reference data, workflow models or schemas held outside the repository,
+  and say where they live.
+
+## Non-functional expectations
+
+- State cut-off times, latency or throughput expectations, batch windows, data classification
+  and regulatory drivers, where documented.
+
+## How to change it safely
+
+- State the conventions to follow and name the type or class to use as an example.
+- State the deprecated approaches to avoid and what replaces them.
+- State the tests that must pass before a change is merged.
+
+## Known traps
+
+- Describe surprising behaviour, ordering assumptions, shared state or past incidents.
+
+## Open questions
+
+- Ask a specific question for the owner about anything that could not be established.
+````
+
+### 9.6 Usage notes
+
+- The best first run is on the five to ten modules that change most often, because those are where agents work most and where wrong placement of logic costs most.
+- The owner review is the step that gives the card its value, so the agent's open questions should be sent to the owner and answered before the card is marked as confirmed.
+- On a modular monolith, cards should be written per bounded context rather than per build module, because build modules in a monolith often do not match ownership.
+- Cards for libraries are most useful when they list the applications that consume the library, which requires a cross-repository search or a dependency graph.
+- The limitation of cards is the same as that of any human-written context, which is that their accuracy depends on owners reviewing them when the module changes, and the fingerprint check only prompts that review rather than guaranteeing it.
+
+## 10. Limitations
 
 - None of these mechanisms proves that a specification is correct.
   - They prove that the specification, the code and the artifacts agree, and that a person reviewed the artifacts when they stopped agreeing.
