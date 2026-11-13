@@ -80,6 +80,9 @@ Design note, November 2026. Related notes: [code-intelligence-tools.md](code-int
 | `entry_points` | Routes, topics, jobs, commands and screens | Deterministic extraction | Generated |
 | `key_symbols` | The domain-core symbols reached within two or three hops | Shallow tracing from entry points | Generated |
 | `crosses` | Other services, topics, tables, external APIs and feature flags | Extraction and tracing | Generated where possible |
+| `archetypes` | The kinds of unit involved, such as service, consumer, library or workflow | Classification in the generator's first phase | Generated |
+| `external_behaviour` | Behaviour defined outside the repository, such as rules in a database or a deployed BPMN model | Configuration and data scans, confirmed by a person | Generated or human |
+| `consumers` | For library features, the applications that call the capability | Dependency graph or cross-repository search | Generated |
 | `tests` | Integration and acceptance tests that exercise the feature | Test names, coverage or traces | Generated |
 | `owner` | The owning team | CODEOWNERS, overridable by a person | Generated or human |
 | `invariants` | Rules the code relies on but does not show | Written by a person | Human only |
@@ -265,6 +268,23 @@ footprint_hash: sha256:...
 
 - Stack independence comes from detecting the stack first and then applying a table of entry-point conventions per framework.
   - Framework route listings and OpenAPI files are preferred over pattern matching when they can run offline.
+- Application-type independence comes from classifying each deployable unit by archetype before extraction, because the archetype decides what counts as an entry point and what counts as a feature.
+
+| Archetype | Entry points | A feature is | Common trap |
+|---|---|---|---|
+| Request-driven service | Routes, RPC methods, resolvers | A group of related operations | Treating each endpoint as a feature |
+| Message consumer | Listeners and config-declared bindings, split per dispatched message type | The handling of one business event or a related set of events | Missing bindings declared only in configuration, and treating a multiplexed listener as one feature |
+| Stream processor | Topology and job definitions and their branches | One branch of a topology from source topic to output | Searching for listeners when the logic is in a topology builder or SQL |
+| Library or SDK | The public API surface | A capability the API offers to callers | Including internal classes, and ignoring which applications consume the library |
+| Workflow | Workflow definitions and BPMN processes | One workflow, with its activities as key symbols | Missing logic defined in `.bpmn` or state-machine files |
+| Data pipeline | Models, DAGs and their tasks | A dataset or report and its lineage | Ignoring SQL models and lineage between tables |
+| UI application | Routes, screens and menu entries | A user journey | Treating each component as a feature |
+| Command-line tool | Command registrations | A command or a family of subcommands | Few traps; this archetype maps cleanly |
+
+- Two further rules apply across archetypes.
+  - When one entry point routes on a message type, event type, command name or FIX `MsgType`, each branch is recorded as its own entry point, because each branch usually implements a different feature.
+  - Configuration and data are treated as sources of entry points and behaviour, so binding files, BPMN files, rule files and service registries are scanned, and a feature whose behaviour lives outside the repository, such as rules held in a database, is labelled as such.
+- Infrastructure-as-code repositories usually do not need a feature registry, and a module card is sufficient for them.
 - Size independence comes from choosing a strategy after measuring the codebase.
   - A small codebase is processed in a single pass.
   - A medium codebase is inventoried as a whole and described per module.
@@ -317,19 +337,44 @@ derive those at query time and a written path goes stale.
    - **Large** (multi-repository or over ~1M lines): partition by deployable unit. Run Phase 1
      to 5 for each partition independently (in parallel sub-agents where available), each
      writing to its own partition output. Then run the merge pass in Phase 6.
-3. Record the chosen strategy, the partitions and the excluded directories in the report.
+3. Classify each deployable unit by archetype. A unit may have more than one archetype, for
+   example a service that also consumes topics. The archetype decides what counts as an entry
+   point (Phase 1) and what counts as a feature (Phase 3).
+
+   | Archetype | Entry points | A feature is |
+   |---|---|---|
+   | service | Routes, RPC methods, GraphQL resolvers | A group of related operations |
+   | consumer | Listeners and config-declared bindings, split per dispatched message type | The handling of one business event or a related set of events |
+   | stream-processor | Topology or job definitions and their branches | One branch from source topic to output |
+   | library | The public API surface | A capability the API offers to callers |
+   | workflow | Workflow definitions, BPMN processes, state machines | One workflow, with activities as key symbols |
+   | data-pipeline | Models, DAGs and tasks | A dataset or report and its lineage |
+   | ui | Routes, screens, menu entries | A user journey |
+   | cli | Command registrations | A command or a family of subcommands |
+
+   Infrastructure-as-code units do not get features. Record them in the report only.
+4. Record the chosen strategy, the partitions, the archetype of each unit and the excluded
+   directories in the report.
 
 ## Phase 1: Detect the stack and its entry-point conventions
 
 For each deployable unit, identify the languages and frameworks, then search for every kind of
-entry point below that applies. Prefer a framework's own route listing when it can run offline
-(for example `rails routes`, `python manage.py show_urls`, an OpenAPI file, Spring
-`@RequestMapping` scans) over pattern matching.
+entry point below that applies to its archetype. Prefer a framework's own route listing when it
+can run offline (for example `rails routes`, `python manage.py show_urls`, an OpenAPI file,
+Spring `@RequestMapping` scans) over pattern matching. Scan configuration files as well as code,
+because many frameworks declare entry points only in configuration.
 
 | Entry-point kind | Examples of what to search for |
 |---|---|
 | HTTP and RPC | Spring `@RestController`/`@*Mapping`; JAX-RS `@Path`; ASP.NET controllers and minimal-API `Map*`; Express/Fastify/Nest routes; FastAPI/Flask/Django URL patterns; Rails `routes.rb`; Go `http.HandleFunc`, gin/echo/chi routers; gRPC service implementations; GraphQL resolvers |
 | Messaging | `@KafkaListener`, `@RabbitListener`, `@JmsListener`, SQS/SNS/EventBridge handlers, Celery/RQ/Sidekiq/Hangfire workers, MassTransit consumers, topic producers |
+| Config-declared messaging | Spring Cloud Stream functional beans (`Consumer`, `Function`, `Supplier`) with bindings in `application.yml`/`application.properties`; Micronaut, Quarkus and SmallRye `@Incoming`/`@Outgoing` channels and their config; consumer group and topic settings in config files |
+| Stream processing | Kafka Streams `StreamsBuilder` and `Topology`; Flink `StreamExecutionEnvironment` jobs; Spark Structured Streaming `readStream`; ksqlDB and Flink SQL `.sql` files |
+| Library public API | Exported packages in `module-info.java`; public classes and methods not marked `@Internal`; `__all__` and `__init__.py` exports; `index.ts` and `exports` in package.json; public items in `lib.rs`; API dump files such as `api/*.api` or `*.api.md` |
+| Workflow | Temporal and Cadence workflow and activity interfaces; Camunda and Flowable `.bpmn` files and job workers; AWS Step Functions and Azure Durable Functions definitions; state-machine configurations |
+| Data pipeline | dbt models and `schema.yml`; Airflow, Dagster and Prefect DAGs and tasks; Spark batch jobs; stored SQL transformations |
+| Plugin and extension points | `META-INF/services` files; Spring `spring.factories` and auto-configuration imports; Python `entry_points` in pyproject.toml; OSGi and IDE extension manifests |
+| Rules held as data | Drools `.drl` files, decision tables, rule spreadsheets, and rule or reference tables loaded from a database at runtime |
 | Scheduled and batch | `@Scheduled`, Quartz, cron files, Kubernetes CronJobs, Airflow DAGs, Spring Batch jobs, JCL jobs, Control-M or Autosys definitions |
 | User interface | React Router/Next.js/Nuxt/Angular routes, page components, menu definitions, mobile screens and deep links |
 | Command line | CLI command registrations (picocli, click, typer, cobra, commander), management commands, rake tasks |
@@ -337,9 +382,20 @@ entry point below that applies. Prefer a framework's own route listing when it c
 | Mainframe and database | CICS transactions, IMS transactions, batch COBOL programs called from JCL, stored procedures and triggers called by applications |
 | Webhooks and integrations | Inbound webhook endpoints, file drops and SFTP pollers, FIX sessions and message handlers |
 
+Apply the dispatch-level rule. When one entry point routes on a message type, event type, header,
+command name or FIX `MsgType` (a switch statement, a handler map, a routing table or a
+`@KafkaHandler` per payload type), record each branch as its own entry point with the
+discriminator value, for example `trade-events[eventType=CANCELLED]`. Each branch usually
+implements a different feature.
+
+For libraries, also record the known consumers of the library from the dependency graph or a
+cross-repository search when one is available, and list them in the report rather than as entry
+points.
+
 Write the complete list to `features/_inventory.json`. Each record holds the kind, the
-identifier (route, topic, job name, command), the handler symbol, the file and line, and the
-deployable unit. The inventory must be exhaustive and must come from search, not sampling.
+identifier (route, topic, job name, command, exported symbol), the discriminator if any, the
+handler symbol, the file and line, and the deployable unit. The inventory must be exhaustive and
+must come from search, not sampling.
 
 ## Phase 2: Collect grouping signals
 
@@ -355,11 +411,18 @@ Gather evidence that helps group entry points into features:
 
 ## Phase 3: Group entry points into features
 
-A feature is a capability that a user, an operator or another system would recognise and could
-describe in one sentence of business language. Apply these rules:
+A feature is a capability that a user, an operator, a calling application or another system
+would recognise and could describe in one sentence of business language. Use the archetype table
+in Phase 0 to decide what a feature looks like for each unit. Apply these rules:
 
 - A feature usually has between 2 and 15 entry points. One feature per endpoint is too fine,
-  and one feature per service is too coarse.
+  and one feature per service is too coarse. A library feature may have a single public
+  entry point when that entry point is a cohesive capability, and a dispatched message branch
+  may be a feature on its own.
+- For libraries, group public API by the capability it offers to callers, not by package
+  layout, and exclude internal classes even when they are technically public.
+- For stream processors and workflows, group by business outcome, following the topology or
+  workflow from its input to its output.
 - A feature may span several deployable units. Keep it as one feature with entry points in
   each unit.
 - Put cross-cutting infrastructure (authentication, logging, health checks, metrics) in a
@@ -380,6 +443,10 @@ For each feature, fill in the schema below.
   calls to other services, message topics produced and consumed, database tables and stored
   procedures, external APIs, files, and feature flags or configuration keys that change its
   behaviour.
+- **External behaviour:** when part of the feature's behaviour is defined outside the
+  repository, such as rules or reference data loaded from a database, a BPMN model deployed
+  separately, or a schema held in a registry, record where it lives under `external_behaviour`.
+  Agents must know that reading the code alone will not show the full behaviour.
 - **Tests:** list the tests that exercise the feature, preferring integration and acceptance
   tests over unit tests.
 - **Aliases:** collect the business terms used for the feature in UI text, docs, tickets and
@@ -419,17 +486,21 @@ Schema:
 id: feat.settlement.partial                 # stable identifier
 name: Partial settlement of failed trades   # inferred until confirmed
 status: proposed                            # proposed | confirmed | orphaned
+archetypes: [service, consumer]             # archetypes of the units involved
 summary: Splits a failed settlement instruction into deliverable parts.   # one sentence
 aliases: [partial settle, split settlement] # business vocabulary
 entry_points:                               # generated
   - {kind: http, id: "POST /api/v2/settlements/{id}/partial", handler: PartialSettlementController#create, unit: settlement-engine}
-  - {kind: kafka-consumer, id: stl.part.v2, handler: PartialSettlementListener#onMessage, unit: settlement-engine}
+  - {kind: kafka-consumer, id: "stl.events[eventType=PARTIAL_REQUESTED]", handler: SettlementEventRouter#onPartialRequested, unit: settlement-engine}
 key_symbols: [SettlementInstructionSplitter#split, BreakResolver#resolve]   # generated
 crosses:                                    # generated where possible
   services: [ref-data]
-  topics: {consumes: [stl.part.v2], produces: [stl.instructed.v1]}
+  topics: {consumes: [stl.events], produces: [stl.instructed.v1]}
   tables: [SETTLEMENT_INSTR]
   flags: [settlement.partial.enabled]
+external_behaviour:                         # behaviour defined outside this repository
+  - {kind: reference-data, location: "SSI_RULES table in ref-data", note: "Minimum partial size per market"}
+consumers: []                               # libraries only: applications that call this capability
 tests: [PartialSettlementIT]                # generated
 owner: team-post-trade                      # from CODEOWNERS, human may override
 invariants: []                              # human only; never generate
@@ -457,6 +528,8 @@ signals clearly support it, otherwise propose a new feature. Never delete a feat
 - On an unfamiliar codebase, the agent should stop after Phase 3 and present the proposed feature groups for review.
   - Correcting the grouping at that point is much cheaper than correcting dozens of finished feature files.
 - The merge pass on a large estate needs the closest human review, because features that span services are where grouping errors concentrate.
+- Consumers whose bindings exist only in configuration, such as Spring Cloud Stream functional beans, are missed by annotation search, so the first run should be checked against the topics the deployment actually subscribes to.
+- A library's registry describes what it offers, while its value to an agent working elsewhere depends on the consumer list, which requires a cross-repository search or dependency graph.
 - Mainframe estates and applications that rely heavily on dependency injection or reflection will produce more unassigned entry points and weaker key symbols.
   - Output from a mainframe analyser, as described in [code-intelligence-tools.md](code-intelligence-tools.md), can supply the missing call relationships for COBOL and JCL.
 
@@ -466,6 +539,7 @@ signals clearly support it, otherwise propose a new feature. Never delete a feat
   - They prove that the specification, the code and the artifacts agree, and that a person reviewed the artifacts when they stopped agreeing.
 - Feature grouping is a judgement, so two runs of the generator can propose different groupings until a person confirms them and the identifiers become fixed.
 - Footprints derived from traces are only as complete as the tests that produce the traces.
+- Behaviour held as data, such as rules in a database or a separately deployed BPMN model, can be pointed to but not checked by the code-based drift mechanisms, so it needs its own change control.
 - Fingerprint checks can create review fatigue if footprints are drawn too broadly, so footprints should be limited to entry points and key symbols rather than every file a feature touches.
 - No public evaluation measures the effect of a feature registry on agent performance, so an organisation should measure it on its own tasks before investing in full coverage.
 
